@@ -48,5 +48,17 @@ public class Joueur {
 		this.possedeCouronne = possedeCouronne;
 	}
 	
+	public void ajouterPieces(int nbPieces) {
+		this.tresor += (nbPieces > 0) ? nbPieces : 0;
+
+	}
 	
+	public void retirerPieces(int nbPieces) {
+		if(nbPieces < 0)
+			nbPieces = 0;
+		this.tresor -= (nbPieces >= this.tresor) ? 0 : nbPieces;
+		
+		
+		
+	}
 }
