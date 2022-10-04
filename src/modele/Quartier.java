@@ -17,6 +17,37 @@ public class Quartier {
 		setCaracteristiques(caracteristiques);
 	}
 	
+	public Quartier(String nom, String type, int cout) {
+		super();
+		setNom(nom);
+		setType(type);
+		setCout(cout);
+		setCaracteristiques("");
+	}
+	
+	public Quartier(String nom, String type) {
+		super();
+		setNom(nom);
+		setType(type);
+		setCout(0);
+		setCaracteristiques("");
+	}
+	public Quartier(String nom) {
+		super();
+		setNom(nom);
+		setType("");
+		setCout(0);
+		setCaracteristiques("");
+	}
+	
+	public Quartier() {
+		super();
+		setNom("");
+		setType("");
+		setCout(0);
+		setCaracteristiques("");
+	}
+	
 	public String getNom() {
 		return nom;
 	}
