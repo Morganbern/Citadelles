@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Joueur {
 	private String nom;
@@ -80,14 +81,13 @@ public class Joueur {
 		return positionQuartierInCite(nomQuartier) == -1 ? false : true;
 	}
 	
+	
 	public Quartier retirerQuartierDansCite(String nomQuartier) {
 		if(this.nbQuartier == 0)
 			System.out.println("La cite est vide, aucun quartier ne peut y etre retiré");
 		else {
 			int indice = positionQuartierInCite(nomQuartier);
-			if(indice == -1)
-				return null;
-			else {
+			if(indice != -1){
 				Quartier quartierARetirer = this.cite[indice];
 				for(int i=indice; i<=this.nbQuartier-1; i++) {
 					cite[i] = cite[i+1];
@@ -96,7 +96,28 @@ public class Joueur {
 				return quartierARetirer;
 			}
 		}
+		return null;
 	}
+	
+	public void ajouterQuartierDansMain(Quartier quartier) { 
+		this.main.add(quartier);
+	}
+	
+	public Quartier retirerQuartierDansMain() { 
+		Random generateur = new Random();
+		int numeroHasard = generateur.nextInt(this.nbQuartiersDansMain());
+		return (this.main.size() <=0) ?null : this.main.remove(numeroHasard);
+	}
+	
+	public void reinitialiser() { 
+		this.tresor = 0;
+		this.main.clear();
+		this.nbQuartier = 0;
+		for(int i=0; i<8; i++) {
+			this.cite[i] = null;
+		}
+	}
+	
 	
 	
 }
