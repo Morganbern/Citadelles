@@ -67,9 +67,34 @@ public class Joueur {
 		}
 	}
 	
+	public int positionQuartierInCite(String nomQuartier) {
+		for(int i=0; i<=this.nbQuartier; i++) {
+			if(this.cite[i].getNom().equals(nomQuartier)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public boolean quartierPresentDansCite(String nomQuartier) {
-		for(int i=0;i<=this.nbQuartier;i++) {
-			
+		return positionQuartierInCite(nomQuartier) == -1 ? false : true;
+	}
+	
+	public Quartier retirerQuartierDansCite(String nomQuartier) {
+		if(this.nbQuartier == 0)
+			System.out.println("La cite est vide, aucun quartier ne peut y etre retiré");
+		else {
+			int indice = positionQuartierInCite(nomQuartier);
+			if(indice == -1)
+				return null;
+			else {
+				Quartier quartierARetirer = this.cite[indice];
+				for(int i=indice; i<=this.nbQuartier-1; i++) {
+					cite[i] = cite[i+1];
+				}
+				this.nbQuartier--;
+				return quartierARetirer;
+			}
 		}
 	}
 	
