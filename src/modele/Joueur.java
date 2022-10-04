@@ -50,15 +50,28 @@ public class Joueur {
 	
 	public void ajouterPieces(int nbPieces) {
 		this.tresor += (nbPieces > 0) ? nbPieces : 0;
-
 	}
 	
 	public void retirerPieces(int nbPieces) {
 		if(nbPieces < 0)
 			nbPieces = 0;
 		this.tresor -= (nbPieces >= this.tresor) ? 0 : nbPieces;
-		
-		
-		
 	}
+	
+	public void ajouterQuartierDansCite(Quartier quartier) {
+		if(this.nbQuartier >= 7) // Maximum 7 car 0 - 7 -> 8 quartiers
+			System.out.println("La cite est complète, elle ne peux plus acceuillir de nouveaux quartiers");
+		else {
+			this.cite[this.nbQuartier] = quartier;
+			this.nbQuartier++;
+		}
+	}
+	
+	public boolean quartierPresentDansCite(String nomQuartier) {
+		for(int i=0;i<=this.nbQuartier;i++) {
+			
+		}
+	}
+	
+	
 }
