@@ -70,7 +70,7 @@ public class Joueur {
 	
 	public int positionQuartierInCite(String nomQuartier) {
 		for(int i=0; i<=this.nbQuartier; i++) {
-			if(this.cite[i].getNom().equals(nomQuartier)) {
+			if( this.cite[i]!=null && this.cite[i].getNom().equals(nomQuartier)) {
 				return i;
 			}
 		}
