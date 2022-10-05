@@ -11,8 +11,8 @@ public class TestPlateauDeJeu {
 	public static void main(String[] args) {
 		TestPlateauDeJeu testPlateau = new TestPlateauDeJeu();
 		//testPlateau.test1();
-		//testPlateau.test2();	
-		//testPlateau.test3();
+		testPlateau.test2();	
+		testPlateau.test3();
 		testPlateau.test4();
 	}
 	
@@ -32,7 +32,7 @@ public class TestPlateauDeJeu {
 		plateau.ajouterJoueur(joueur);
 		Test.test(plateau.getNombreJoueurs()== 1,"nombre de joueurs");
 		Test.test(plateau.getJoueur(0)== joueur,
-				"récupération de ce joueur depuis le tableau");
+				"rï¿½cupï¿½ration de ce joueur depuis le tableau");
 	}
 	public void test3() {
 		System.out.println("TEST DE L'AJOUT D'UN PERSONNAGE");
@@ -41,7 +41,7 @@ public class TestPlateauDeJeu {
 		plateau.ajouterPersonnage(roi);
 		Test.test(plateau.getNombrePersonnages()== 1,"nombre de joueurs");
 		Test.test(plateau.getPersonnage(0)== roi,
-				"récupération du personnage depuis le tableau");
+				"rï¿½cupï¿½ration du personnage depuis le tableau");
 	}
 	public void test4() {
 		System.out.println("TEST DE L'ASSOCIATION DU PLATEAU AU PERSONNAGE");
