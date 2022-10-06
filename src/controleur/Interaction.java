@@ -30,8 +30,11 @@ public class Interaction {
 			try {
 				i = sc.nextInt();
 				continu = (i>=borneMin && i<borneMax);	
+				if(!continu) {
+					System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
+				}
 			} catch (InputMismatchException e) {
-				System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +": ");
+				System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
 				sc.next(); // passe l'entier pour �viter de boucler
 			}
 		} while(!continu);
@@ -59,6 +62,7 @@ public class Interaction {
 					}
 					
 				} catch (InputMismatchException e) {
+					System.out.print("Veuillez entrer oui ou o,  ou, n ou non : ");
 					sc.next(); // passe l'entier pour �viter de boucler
 				}
 			} while(continu);
