@@ -29,7 +29,7 @@ public class Interaction {
 		do {
 			try {
 				i = sc.nextInt();
-				continu = (i>=borneMin && i<=borneMax);
+				continu = (i>=borneMin && i<borneMax);
 				if(!continu)
 					System.out.print("Veuillez rentrer un entier entre "+borneMin+ " et " + borneMax + ": ");
 			} catch (InputMismatchException e) {
