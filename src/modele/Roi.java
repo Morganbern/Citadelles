@@ -22,7 +22,7 @@ public class Roi extends Personnage{
             cite = super.getJoueur().getCite();
             int nbNoble = 0;
             
-            for(int i=0; i <=7 ; i++) {
+            for(int i=0; i <super.getJoueur().nbQuartiersDansCite() ; i++) {
                 if(cite[i]!= null && cite[i].getType() == "NOBLE")
                     nbNoble++;    
             }
