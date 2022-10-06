@@ -24,15 +24,14 @@ public class Interaction {
 	// renvoie un entier lu au clavier compris dans l'intervalle
 	//     [borneMin, borneMax[
 	public static int lireUnEntier(int borneMin, int borneMax) {
-		int i = 0;
-		boolean continu = true;
+		int i=borneMin-1;
+		boolean continu = false;
 		do {
 			try {
 				i = sc.nextInt();
-				continu = (i>=borneMin && i<borneMax);
-				if(!continu)
-					System.out.print("Veuillez rentrer un entier entre "+borneMin+ " et " + borneMax + ": ");
+				continu = (i>=borneMin && i<borneMax);	
 			} catch (InputMismatchException e) {
+				System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +": ");
 				sc.next(); // passe l'entier pour �viter de boucler
 			}
 		} while(!continu);

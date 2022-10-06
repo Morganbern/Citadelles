@@ -6,8 +6,8 @@ public class TestInteraction {
 	public static void main(String[] args){
 		TestInteraction test = new TestInteraction();
 		//test.test1();
-		//test.test2();
-		test.test3();
+		test.test2();
+		//test.test3();
 		//test.test4();
 	}	
 	
