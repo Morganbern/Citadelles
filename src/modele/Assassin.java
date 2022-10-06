@@ -32,7 +32,7 @@ public class Assassin extends Personnage{
     		}
     			
     	}
-    	while(choix > this.getPlateau().getNombrePersonnages() || choix < 1);
+    	while(choix == -1);
     	this.getPlateau().getPersonnage(choix-1).setAssassine();
     } 
     

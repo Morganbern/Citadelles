@@ -6,7 +6,7 @@ public class Voleur extends Personnage{
     
     
     public Voleur() {
-        super("Voleur", 2, Caracteristiques.ASSASSIN);
+        super("Voleur", 2, Caracteristiques.VOLEUR);
     }
     
     private int indiceVoleur() {
@@ -26,7 +26,7 @@ public class Voleur extends Personnage{
     	do {
     		System.out.print("Votre choix : ");
     		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix-1).getRang() == 1) {
+    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix-1).getRang() == 1 || this.getPlateau().getPersonnage(choix-1).getAssassine()) {
     			System.out.println("Vous ne pouvez voler ce joueur.");
     			choix = -1;
     		}
