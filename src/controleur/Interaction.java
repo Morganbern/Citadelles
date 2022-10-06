@@ -25,21 +25,62 @@ public class Interaction {
 	//     [borneMin, borneMax[
 	public static int lireUnEntier(int borneMin, int borneMax) {
 		int i = 0;
-		// ...	
+		boolean continu = true;
+		do {
+			try {
+				i = sc.nextInt();
+			continu = !(i>borneMin && i<borneMax);
+			} catch (InputMismatchException e) {
+				System.out.print("Veuillez rentrer un chiffre entre "+borneMin+ " et " + borneMax);
+				sc.next(); // passe l'entier pour �viter de boucler
+			}
+		} while(continu);
+		
 		return i;
 	}
 
 	// lit les r�ponses "oui", "non", "o" ou "n" et renvoie un bool�en
 	public static boolean lireOuiOuNon() {
-		boolean retour = true;
-		// ...
-		return retour;
+			String texte;
+			boolean b= true;
+			boolean continu = true;
+			do {
+				try {
+					texte = sc.nextLine();
+					if (texte.equals(new String("o")) || texte.equals(new String("oui"))) { 
+						b = true;
+						continu = false;
+						
+					}else if(texte.equals(new String("n")) || texte.equals(new String("non"))) {
+						b = false;
+						continu = false;
+
+					}else {
+						
+					}
+		
+				} catch (InputMismatchException e) {
+					System.out.print("Veuillez entrer oui ou o,  ou, n ou non");
+					sc.next(); // passe l'entier pour �viter de boucler
+				}
+			} while(continu);
+		return b;
 	}
 
 	// renvoie une cha�ne de caract�re lue au clavier:
 	public static String lireUneChaine() {
 		String retour = "";
-		...
+		boolean continu = true;
+		do {
+			try {
+				retour = sc.nextLine(); 
+				continu = false;
+	
+			} catch (InputMismatchException e) {
+				System.out.print("Veuillez entrer votre chaine de caractere");
+				sc.next(); // passe l'entier pour �viter de boucler
+			}
+		} while(continu);
 		return retour;
 	}
 
