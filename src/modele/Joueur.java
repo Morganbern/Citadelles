@@ -62,7 +62,7 @@ public class Joueur {
 	public void retirerPieces(int nbPieces) {
 		if(nbPieces < 0)
 			nbPieces = 0;
-		this.tresor -= (nbPieces >= this.tresor) ? 0 : nbPieces;
+		this.tresor -= (nbPieces > this.tresor) ? 0 : nbPieces;
 	}
 	
 	public void ajouterQuartierDansCite(Quartier quartier) {
