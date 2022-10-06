@@ -8,7 +8,7 @@ public class TestAssassin {
 	public static void main(String[] args) {
 		TestAssassin test = new TestAssassin();
 		test.test1();
-		//test.test2();	
+		test.test2();	
 	}
 	
 	public void test1() {
@@ -20,9 +20,9 @@ public class TestAssassin {
 		plateau.ajouterPersonnage(assassin);
 		Test.test(plateau.getNombrePersonnages()== 2,"nombre de joueurs");
 		Test.test(plateau.getPersonnage(1)==assassin,
-				"récupération du personnage de l'assassin");
+				"rï¿½cupï¿½ration du personnage de l'assassin");
 		Test.test(plateau.getPersonnage(1).getRang()==1,
-				"récupération du rang");		
+				"rï¿½cupï¿½ration du rang");		
 	}
 	public void test2() {
 		System.out.println("TEST DE L'ASSASSINAT DU ROI");
@@ -33,9 +33,9 @@ public class TestAssassin {
 		plateau.ajouterPersonnage(assassin);
 		
 		// on utilise le pouvoir de l'assassin
-		// NB: seul le roi peut être assassiné dans cette situation
+		// NB: seul le roi peut ï¿½tre assassinï¿½ dans cette situation
 		assassin.utiliserPouvoir();
-		Test.test(roi.getAssassine(),"le roi est assassiné");
+		Test.test(roi.getAssassine(),"le roi est assassinï¿½");
 	}
 	
 }
