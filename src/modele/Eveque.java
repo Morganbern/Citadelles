@@ -1,39 +1,24 @@
 package modele;
-import controleur.Interaction;
 
 
 public class Eveque extends Personnage{
     
     
     public Eveque() {
-        super("Eveque", 2, Caracteristiques.ASSASSIN);
+        super("Eveque", 5, Caracteristiques.EVEQUE);
     }
     
-    private int indiceVoleur() {
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		if(this.getPlateau().getPersonnage(i).getNom().equals(new String("Voleur")))
-    			return i;
+    public void percevoirRessourcesSpecifiques() {
+    	int nbBatRel= 0;
+    	for(int i=0; i< this.getJoueur().nbQuartiersDansCite(); i++) {
+    		if(this.getJoueur().getCite()[i].getType().equals("RELIGIEUX"))
+    			nbBatRel++;
     	}
-    	return -1;
+    	this.getJoueur().ajouterPieces(nbBatRel);
+		System.out.println("Vous avez " + nbBatRel + " batiment(s) religieux. Vous recevez donc "+ nbBatRel +" piece(s) d'or.");
     }
-    
-    public void utiliserPouvoir() {
-		System.out.println("Quel personnage voulez-vous voler ?");
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		System.out.println((i+1) + " " + this.getPlateau().getPersonnage(i).getNom());
-    	}
-    	int choix;
-    	do {
-    		System.out.print("Votre choix : ");
-    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix).getRang() == 1) {
-    			System.out.println("Vous ne pouvez voler ce joueur.");
-    			choix = -1;
-    		}
-    			
-    	}
-    	while(choix > this.getPlateau().getNombrePersonnages() || choix < 1);
-    	this.getPlateau().getPersonnage(choix-1).setVole();
-    } 
+
+	void utiliserPouvoir() {
+	} 
     
 }
