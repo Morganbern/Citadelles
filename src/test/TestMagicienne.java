@@ -30,7 +30,7 @@ public class TestMagicienne {
 		plateau.ajouterPersonnage(magicienne);
 		Test.test(plateau.getNombrePersonnages()== 3,"nombre de personnages");
 		Test.test(plateau.getPersonnage(2)==magicienne,
-				"récupération du personnage de la magicienne");
+				"rï¿½cupï¿½ration du personnage de la magicienne");
 		Test.test(plateau.getPersonnage(2).getRang()==3,
 				"rang de la magicienne");
 		
@@ -39,7 +39,7 @@ public class TestMagicienne {
 		System.out.println("TEST DU POUVOIR DE LA MAGICIENNE");
 		PlateauDeJeu plateau = new PlateauDeJeu();
 		
-		// création de quatre personnages
+		// crï¿½ation de quatre personnages
 		Roi roi = new Roi();
 		plateau.ajouterPersonnage(roi);
 		Assassin assassin = new Assassin();
@@ -47,7 +47,7 @@ public class TestMagicienne {
 		Magicienne magicienne = new Magicienne();
 		plateau.ajouterPersonnage(magicienne);
 			
-		// création de trois joueurs
+		// crï¿½ation de trois joueurs
 		Joueur joueur1 = new Joueur("Milou");
 		plateau.ajouterJoueur(joueur1);
 		Joueur joueur2 = new Joueur("Billy");
@@ -60,20 +60,20 @@ public class TestMagicienne {
 		assassin.setJoueur(joueur2);
 		magicienne.setJoueur(joueur3);
 		
-		// création d'une pioche:
+		// crï¿½ation d'une pioche:
 		Pioche pioche = plateau.getPioche();
 		Quartier q = new Quartier("temple",Quartier.TYPE_QUARTIERS[0],1); pioche.ajouter(q);
 		q = new Quartier("prison",Quartier.TYPE_QUARTIERS[1],2); pioche.ajouter(q);
 		q = new Quartier("palais",Quartier.TYPE_QUARTIERS[2],5); pioche.ajouter(q);
 		q = new Quartier("taverne",Quartier.TYPE_QUARTIERS[3],1); pioche.ajouter(q);
-		q = new Quartier("échoppe",Quartier.TYPE_QUARTIERS[3],2); pioche.ajouter(q);
+		q = new Quartier("ï¿½choppe",Quartier.TYPE_QUARTIERS[3],2); pioche.ajouter(q);
 		q = new Quartier("basilique",Quartier.TYPE_QUARTIERS[4],4,"A la fin de la partie, ..."); 
 		pioche.ajouter(q);
-		q = new Quartier("cathédrale",Quartier.TYPE_QUARTIERS[0],5); pioche.ajouter(q);
+		q = new Quartier("cathï¿½drale",Quartier.TYPE_QUARTIERS[0],5); pioche.ajouter(q);
 		q = new Quartier("caserne",Quartier.TYPE_QUARTIERS[1],3); pioche.ajouter(q);
 		q = new Quartier("manoir",Quartier.TYPE_QUARTIERS[2],3); pioche.ajouter(q);
-		q = new Quartier("hôtel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
-		q = new Quartier("bibliothèque",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
+		q = new Quartier("hï¿½tel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
+		q = new Quartier("bibliothï¿½que",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
 		pioche.ajouter(q);
 		pioche.melanger();
 		
@@ -104,13 +104,13 @@ public class TestMagicienne {
 			System.out.print(mainMagicienne.get(i).getNom() + ", ");
 		System.out.println("");
 				
-		// on récupère la taille de la pioche:
+		// on rï¿½cupï¿½re la taille de la pioche:
 		int taillePiocheAvantPouvoir = pioche.nombreElements();
 		
 		// utiliser le pouvoir de la magicienne :		
 		magicienne.utiliserPouvoir();
 		
-		// on réaffiche la main de chaque joueur:
+		// on rï¿½affiche la main de chaque joueur:
 		System.out.print("Main du Roi (" + roi.getJoueur().getNom() + "): ");
 		for(int i = 0; i< mainRoi.size(); i++)
 			System.out.print(mainRoi.get(i).getNom() + ", ");
@@ -124,9 +124,9 @@ public class TestMagicienne {
 			System.out.print(mainMagicienne.get(i).getNom() + ", ");
 		System.out.println("");
 		
-		// on vérifie que la taille de la pioche n'a pas changé:
+		// on vï¿½rifie que la taille de la pioche n'a pas changï¿½:
 		Test.test(taillePiocheAvantPouvoir==pioche.nombreElements(), 
-				"taille inchangée de la pioche");
+				"taille inchangï¿½e de la pioche");
 	}
 	
 }
