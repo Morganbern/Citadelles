@@ -11,8 +11,8 @@ public class TestArchitecte {
 
 	public static void main(String[] args) {
 		TestArchitecte test= new TestArchitecte();
-		test.test1();
-		//test.test2();	
+		//test.test1();
+		test.test2();	
 	}
 	
 	public void test1(){
@@ -21,7 +21,7 @@ public class TestArchitecte {
 		Test.test(architecte.getNom().equals("Architecte"),"test du nom du personnage");
 		Test.test(architecte.getRang()== 6,"test du rang du personnage");
 		Test.test(architecte.getCaracteristiques().equals(Caracteristiques.ARCHITECTE),
-				"test des caractéristiques du personnage");
+				"test des caractï¿½ristiques du personnage");
 		Test.test(architecte.getJoueur()==null, "test de l'initialisation de la variable \"joueur\"");
 		Test.test(architecte.getAssassine()==false, "test de l'initialisation de la variable \"assassine\"");
 		Test.test(architecte.getVole()==false, "test de l'initialisation de la variable \"vole\"");
@@ -29,7 +29,7 @@ public class TestArchitecte {
 	
 	public void test2(){
 		System.out.println("TEST DE L'UTILISATION DU POUVOIR");
-		// on crée un plateau et on ajoute des cartes Quartier à la pioche:		
+		// on crï¿½e un plateau et on ajoute des cartes Quartier ï¿½ la pioche:		
 		PlateauDeJeu plateau = new PlateauDeJeu();
 		Quartier quartier1 = new Quartier("temple",Quartier.TYPE_QUARTIERS[0],1);
 		Quartier quartier2 = new Quartier("prison",Quartier.TYPE_QUARTIERS[1],2);
@@ -50,7 +50,7 @@ public class TestArchitecte {
 				"test du nombre de cartes dans la main avant l'utilisation du pouvoir");			
 		architecte.utiliserPouvoir();
 		Test.test(architecte.getJoueur().nbQuartiersDansMain() == 2,
-				"test du nombre de cartes dans la main après l'utilisation du pouvoir");
+				"test du nombre de cartes dans la main aprï¿½s l'utilisation du pouvoir");
 			
 	}
 }
