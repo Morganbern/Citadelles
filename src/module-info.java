@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author Morgan
- *
- */
-module citadelles {
-}
