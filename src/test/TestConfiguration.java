@@ -8,7 +8,7 @@ public class TestConfiguration {
 	
 	public static void main(String[] args){
 		TestConfiguration test = new TestConfiguration();
-		test.test1();
+		//test.test1();
 		test.test2();
 		//test.test3();
 		//test.test4();
@@ -31,13 +31,13 @@ public class TestConfiguration {
 		int temple = 0;
 		int cathedrale = 0;
 		int monastere = 0;
-		int TourDeGuet =0;
+		int TourDeGuet = 0;
 		int prison = 0;
 		int caserne = 0;
 		int echoppe = 0;
-		int comptoir=0;
+		int comptoir= 0;
 		int port = 0;
-		int palais =0;
+		int palais = 0;
 		int chateau = 0;
 		int marche =0;
 		int manoir = 0;
@@ -83,6 +83,7 @@ public class TestConfiguration {
 			}
 		
 		}
+		
 		System.out.println("eglise : " + eglise);
 		System.out.println("forteresse : " + forteresse);
 		System.out.println("hotelDeVille : " + hotelDeVille);
@@ -104,20 +105,20 @@ public class TestConfiguration {
 	}
 	
 	public void test2() {
+		
 		Pioche pioche = new Pioche();
 		PlateauDeJeu plateau = Configuration.configurationDeBase(pioche);
 		
-		int 
+		int nbCartes = pioche.nombreElements();
+		Test.test(nbCartes==14,"Test du Nb de carte");
 		
-		for (int nbCartes=0; nbCartes < pioche.nombreElements(); nbCartes++) {
-
+		for (int Cartes=0; Cartes < nbCartes; Cartes++) {
+			System.out.println(pioche.piocher().getNom());
 		}
 		 
 		int nbJoueur = plateau.getNombreJoueurs();
 		 Test.test(nbJoueur==4,"Test du Nb de joueur");
 			
-		
-		
 	}
 	
 }

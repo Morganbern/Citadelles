@@ -72,7 +72,7 @@ public class Configuration {
 		plateau.ajouterPersonnage(new Roi());
 
 		for(int nbJoueur=0; nbJoueur<4; nbJoueur ++) {
-			System.out.println("Nom du Joueur n°" + (nbJoueur+1) );
+			System.out.println("Nom du Joueur n°" + (nbJoueur+1) + "?" );
 			String NomJoueur = Interaction.lireUneChaine();
 			plateau.ajouterJoueur(new Joueur(NomJoueur));
 		}
