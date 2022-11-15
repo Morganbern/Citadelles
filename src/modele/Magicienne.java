@@ -107,6 +107,80 @@ public class Magicienne extends Personnage{
 		}
 	    	
     	
-    } 
+    }
+
+	@Override
+	void utiliserPouvoirAvatar() {
+//		Random generateur = new Random();
+//		if(generateur.nextInt(2) == 1){ // Avatar veut echanger ses cartes ?
+//	    	int choix;
+//	    	do {
+//	    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1; //choisir avec qui echanger ses cartes
+//	    		if(choix == this.indiceMagicienne()+1) { // pas possible d'echanger ses cartes avec soi-meme
+//	    			choix = -1;
+//	    		}
+//	    			
+//	    	}while(choix == -1);
+//	    	
+//	    	ArrayList<Quartier> copieMagicienne = new ArrayList<Quartier>(this.getJoueur().getMain());
+//	    	ArrayList<Quartier> copiePersonne = new ArrayList<Quartier>(this.getPlateau().getJoueur(choix-1).getMain());
+//	    	
+//	    	while(this.getJoueur().nbQuartiersDansMain()>0) {
+//	    		this.getJoueur().retirerQuartierDansMain();
+//	    	}
+//	    	while(this.getPlateau().getJoueur(choix-1).nbQuartiersDansMain()>0) {
+//	    		this.getPlateau().getJoueur(choix-1).retirerQuartierDansMain();
+//	    	}
+//	    	
+//	    	for(int i=0; i<copieMagicienne.size(); i++) {
+//	    		this.getPlateau().getJoueur(choix-1).ajouterQuartierDansMain(copieMagicienne.get(i));
+//	    	}
+//	    	for(int i=0; i<copiePersonne.size(); i++) { 
+//	    		this.getJoueur().ajouterQuartierDansMain(copiePersonne.get(i));
+//	    	}
+//	    	  	
+//		}else if(this.getJoueur().nbQuartiersDansMain()==0){
+//			
+//		}else {
+//			int nbCartes = generateur.nextInt(this.getJoueur().nbQuartiersDansMain()+1); // nombre de cartes a piocher
+//			int nbCarteMainMagicienne=this.getJoueur().nbQuartiersDansMain();
+//			if(nbCartes == 0) {
+//				
+//			}else if(nbCartes == nbCarteMainMagicienne) {
+//				
+//				ArrayList<Quartier> copieMagicienne = new ArrayList<Quartier>(this.getJoueur().getMain());
+//		    	for(int i=0; i<nbCarteMainMagicienne;i++) {
+//		    		this.getJoueur().retirerQuartierDansMain();
+//		    		this.getPlateau().getPioche().ajouter(copieMagicienne.get(i));
+//		    	}
+//		    	for(int i=0; i<nbCarteMainMagicienne; i++) {
+//		    		this.getJoueur().ajouterQuartierDansMain(this.getPlateau().getPioche().piocher());
+//		    	}		
+//			}else {
+//				
+//				ArrayList<Quartier> copieMagicienne = new ArrayList<Quartier>(this.getJoueur().getMain());
+//				for(int j=0; j<nbCartes;j++) {
+//					int choix = Interaction.lireUnEntier(1,this.getJoueur().nbQuartiersDansMain()+1);
+//					this.getPlateau().getPioche().ajouter(copieMagicienne.get(choix-1));
+//					copieMagicienne.remove(choix-1);
+//				}
+//				for(int i=0;i<nbCartes;i++) {
+//					copieMagicienne.add(this.getPlateau().getPioche().piocher());
+//				}
+//				
+//				for(int i=0; i<nbCarteMainMagicienne;i++) {
+//					this.getJoueur().retirerQuartierDansMain();
+//				}
+//				
+//				for(int i=0; i<copieMagicienne.size();i++) {
+//					this.getJoueur().ajouterQuartierDansMain(copieMagicienne.get(i));
+//				}
+//				
+//			}
+//				
+//			
+//			
+//		}
+	} 
     
 }

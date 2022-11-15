@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Condottiere extends Personnage{
@@ -18,8 +20,9 @@ public class Condottiere extends Personnage{
     	this.getJoueur().ajouterPieces(nbBatMil);
 		System.out.println("Vous avez " + nbBatMil + " batiment(s) commercants. Vous recevez donc "+ nbBatMil +" piece(s) d'or.");
     }
-
-	public void utiliserPouvoir() {
+    
+	@Override
+	void utiliserPouvoir() {
 		System.out.print("Voulez-vous utiliser votre pouvoir de destruction ? ");
 		if(Interaction.lireOuiOuNon()){
 	    	int choixJ,choixQ = 0;
@@ -76,6 +79,34 @@ public class Condottiere extends Personnage{
 			System.out.print(" (cité complète)");
 		}
 		System.out.println("");
+	}
+	
+	public void utiliserPouvoirAvatar() {
+		Random generateur = new Random();
+		if(generateur.nextInt(2) == 1){ //avatar veut utiliser son pouvoir ?
+	    	int choixJ,choixQ = 0;
+	    	do {
+	    		choixJ = generateur.nextInt(this.getPlateau().getNombrePersonnages()+1); // choix du joueur aléatoire (0 = personne)
+	    		if(choixJ != 0) {
+		    		if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() == 8) { // la cite du joueur choisi est complete
+		    			choixJ = -1;
+		    		}else if(choixJ == this.indiceEveque()+1 && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) { // pas possible de choisir un eveque vivant
+		    			choixJ = -1;
+		    		}else{
+			    		choixQ = generateur.nextInt(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite())+1; // choix du quartier
+			    		if(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1 > this.getJoueur().nbPieces()) { //tresor insuffisant
+				    		choixQ = -1;
+				    		
+			    		}
+		    		}
+	    		}
+	    	}while(choixJ == -1 || choixQ == -1);
+	    	if(choixJ != 0) {
+				System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
+				this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1);
+				this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom());
+	    	}
+		}
 	}
     
 }

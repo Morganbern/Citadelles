@@ -11,6 +11,11 @@ public class Architecte extends Personnage{
 	public void utiliserPouvoir() {
 		this.getJoueur().ajouterQuartierDansMain(this.getPlateau().getPioche().piocher());
 		this.getJoueur().ajouterQuartierDansMain(this.getPlateau().getPioche().piocher());
-	} 
+	}
+
+	@Override
+	void utiliserPouvoirAvatar() {
+		this.utiliserPouvoir();
+	}
     
 }

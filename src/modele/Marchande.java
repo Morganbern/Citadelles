@@ -21,6 +21,11 @@ public class Marchande extends Personnage{
 	public void utiliserPouvoir() {
 		System.out.println("Vous utiliser votre pouvoir. Vous recevez donc 1 piece d'or.");
 		this.getJoueur().ajouterPieces(1);
+	}
+
+	@Override
+	void utiliserPouvoirAvatar() {
+		this.getJoueur().ajouterPieces(1);
 	} 
     
 }
