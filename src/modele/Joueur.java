@@ -11,6 +11,7 @@ public class Joueur {
 	private ArrayList<Quartier> main;
 	private boolean possedeCouronne;
 	private boolean IsBot;
+	private boolean termineePremier;
 	protected Personnage monPersonnage;
 	
 	public Joueur(String nom) {
@@ -25,6 +26,14 @@ public class Joueur {
 		this.IsBot = false;
 	}
 	
+	public boolean isTermineePremier() {
+		return termineePremier;
+	}
+
+	public void setTermineePremier(boolean termineePremier) {
+		this.termineePremier = termineePremier;
+	}
+
 	public Personnage getPersonnage() {
 		return monPersonnage;
 	}
@@ -133,7 +142,5 @@ public class Joueur {
 			this.cite[i] = null;
 		}
 	}
-	
-	
 	
 }
