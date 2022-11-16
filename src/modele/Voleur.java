@@ -37,9 +37,6 @@ public class Voleur extends Personnage{
     	while(choix == -1);
     	if(this.getPlateau().getPersonnage(choix-1).getJoueur() != null) {
     		this.getPlateau().getPersonnage(choix-1).setVole();
-    		int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
-    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
-    		this.getPlateau().getPersonnage(choix-1).getJoueur().retirerPieces(nbPiecesAVoler);
     	}
     }
 

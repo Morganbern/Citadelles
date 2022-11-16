@@ -87,6 +87,7 @@ public abstract class Personnage{
 
 	abstract void utiliserPouvoir();
 	
+	
 	abstract void utiliserPouvoirAvatar();
     
     public void reinitialiser() {

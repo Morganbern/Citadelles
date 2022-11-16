@@ -95,11 +95,14 @@ public class Jeu {
 		for (Personnage perso : listeDePersonnage) {
 			if (!perso.getAssassine()){
 				if(perso.getVole()) {
-					
+//					idJoueurVoleur();
+//					int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
+//		    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
+//		    		this.getPlateau().getPersonnage(choix-1).getJoueur().retirerPieces(nbPiecesAVoler);
 				}
 				percevoirRessource(perso);
 				perso.percevoirRessourcesSpecifiques();
-				
+				System.out.println("Voulez-vous utiliser votre pouvoir ?");
 				
 					
 				
@@ -147,11 +150,10 @@ public class Jeu {
 		
 		int JoueurAvecCouronne = 0;
 		
-		
 		while(!plateau.getJoueur(JoueurAvecCouronne).getPossedeCouronne()){
 			JoueurAvecCouronne++;
 		}
-		
+
 		Joueur JoueurCouronne = plateau.getJoueur(JoueurAvecCouronne);
 		System.out.println("Le joueur" + JoueurCouronne + " à la couronne ! ");
 		
@@ -198,19 +200,30 @@ public class Jeu {
 	}
 	
 	private void percevoirRessource(Personnage perso) {
-		System.out.println("Souhaitez-vous prendre : ");
-		System.out.println("1. Deux pièces d'or ");
-		System.out.println("2. Prendre deux cartes de la pioche, une carte sera ensuite défaussée");
-		int choix = Interaction.lireUnEntier(1, 2);
-		if(choix ==1) {
-			perso.ajouterPieces();
-		}else {
-			ArrayList<Quartier> cartes = new ArrayList<Quartier>();
-			cartes.add(this.plateau.getPioche().piocher());
-			cartes.add(this.plateau.getPioche().piocher());
-			
+		
+		if(!perso.getJoueur().getIsBot()) {
+			System.out.println("Souhaitez-vous prendre : ");
+			System.out.println("1. Deux pièces d'or ");
+			System.out.println("2. Prendre deux cartes de la pioche, une carte sera ensuite défaussée");
 		}
 		
+		if(!perso.getJoueur().getIsBot()) {
+			
+		}
+			int choix = Interaction.lireUnEntier(1, 2);
+			if(choix ==1) {
+				perso.ajouterPieces();
+			}else {
+				ArrayList<Quartier> cartes = new ArrayList<Quartier>();
+				for(int i=1; i<2; i++) {
+					cartes.add(this.plateau.getPioche().piocher());
+					System.out.println(i + ". "+ cartes.get(i-1));
+				}
+				System.out.println("Qu'elles carte souhaité vous garder ?");
+				choix = Interaction.lireUnEntier(1,2);
+				perso.ajouterQuartier(cartes.get(choix));
+				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 2:1));
+			}
 	}
 	
 	private void calculDesPoints() {
