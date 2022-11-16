@@ -90,11 +90,11 @@ public abstract class Personnage{
 	abstract void utiliserPouvoirAvatar();
     
     public void reinitialiser() {
+        if(this.joueur != null)
+        	this.joueur.monPersonnage = null;
         this.joueur = null;
         this.vole = false;
         this.assassine = false;
-        if(this.joueur != null)
-        	this.joueur.monPersonnage = null;
     }
     
     
