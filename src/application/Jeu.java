@@ -71,11 +71,35 @@ public class Jeu {
 	}
 	
 	private void gestionCouronne() {
-		
+		if(idJoueurRoi() != -1) {
+			this.plateau.getJoueur(idJoueurRoi()).setPossedeCouronne(true);
+		}
+	}
+	
+	private int idJoueurRoi() {
+		int joueurRoi = 0;
+		while(joueurRoi < this.plateau.getNombreJoueurs()){
+			if(plateau.getJoueur(joueurRoi).getPersonnage().getNom().equals(new String("Roi")))
+				return joueurRoi;
+			joueurRoi++;
+		}
+		return -1;
+	}
+	
+	private int idJoueurVoleur() {
+		int joueurVoleur = 0;
+		while(joueurVoleur < this.plateau.getNombreJoueurs()){
+			if(plateau.getJoueur(joueurVoleur).getPersonnage().getNom().equals(new String("Voleur")))
+				return joueurVoleur;
+			joueurVoleur++;
+		}
+		return -1;
 	}
 	
 	private void reinitialisationPersonnages() {
-		
+		for(int i=0; i<this.plateau.getNombreJoueurs(); i++) {
+			this.plateau.getJoueur(i).getPersonnage().reinitialiser();
+		}
 	}
 	
 	private boolean partieFinie() {
