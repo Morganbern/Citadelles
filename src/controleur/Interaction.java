@@ -75,7 +75,7 @@ public class Interaction {
 		boolean continu = true;
 		do {
 			try {
-				retour = sc.nextLine(); 
+				retour = sc.next(); 
 				continu = false;
 	
 			} catch (InputMismatchException e) {

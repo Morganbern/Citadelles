@@ -70,12 +70,24 @@ public class Configuration {
 		plateau.ajouterPersonnage(new Marchande());
 		plateau.ajouterPersonnage(new Voleur());
 		plateau.ajouterPersonnage(new Roi());
-
-		for(int nbJoueur=0; nbJoueur<4; nbJoueur ++) {
-			System.out.println("Nom du Joueur n°" + (nbJoueur+1) + "?" );
-			String NomJoueur = Interaction.lireUneChaine();
+		
+		// Connaître nombre réel joueur
+		
+		System.out.println("Entrer le nombre de joueur réel parmis les 4 joueurs");
+		int nbJoueur = Interaction.lireUnEntier(0,5);
+		
+		for(int Joueur=0; Joueur< nbJoueur; Joueur ++) {
+			System.out.println("Nom du Joueur n°" + (Joueur+1) + "?" );
+			String NomJoueur= Interaction.lireUneChaine();
 			plateau.ajouterJoueur(new Joueur(NomJoueur));
 		}
+		
+		// Ajouter les bots
+		for(int bot=nbJoueur+1; bot<4; bot++) {
+			plateau.ajouterJoueur(new Joueur("Joueur"+bot));
+			plateau.getJoueur(bot-1).setIsBot(true);
+		}
+		
 		
 		String[] MerveilleName = {"Capitole",
 									"Carrière",

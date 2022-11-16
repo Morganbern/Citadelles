@@ -1,6 +1,6 @@
 package modele;
 
-public abstract class Personnage {
+public abstract class Personnage{
     private String nom;
     private int rang;
     private String caracteristiques;
@@ -13,6 +13,7 @@ public abstract class Personnage {
     public String getNom() {
         return nom;
     }
+    
     
     public Personnage(String nom, int rang, String caracteristiques) {
         super();

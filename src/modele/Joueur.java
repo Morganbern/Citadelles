@@ -10,6 +10,7 @@ public class Joueur {
 	private int nbQuartier;
 	private ArrayList<Quartier> main;
 	private boolean possedeCouronne;
+	private boolean IsBot;
 	protected Personnage monPersonnage;
 	
 	public Joueur(String nom) {
@@ -21,6 +22,7 @@ public class Joueur {
 		this.cite = new Quartier[8];
 		this.main = new ArrayList<Quartier>();
 		this.monPersonnage = null;
+		this.IsBot = false;
 	}
 	
 	public Personnage getPersonnage() {
@@ -53,6 +55,14 @@ public class Joueur {
 	}
 	public void setPossedeCouronne(boolean possedeCouronne) {
 		this.possedeCouronne = possedeCouronne;
+	}
+	
+	public Boolean getIsBot() {
+		return IsBot;
+	}
+	
+	public void setIsBot(boolean IsBot) {
+		this.IsBot = IsBot;
 	}
 	
 	public void ajouterPieces(int nbPieces) {
