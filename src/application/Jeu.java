@@ -64,7 +64,8 @@ public class Jeu {
 		plateau = Configuration.configurationDeBase(pioche);
 		for(int i=0; i<plateau.getNombreJoueurs(); i++){
 			plateau.getJoueur(i).ajouterPieces(2);
-			for(int j=0; j<4; j++) {plateau.getJoueur(i).ajouterQuartierDansMain(pioche.piocher());}
+			for(int j=0; j<4; j++) 
+				plateau.getJoueur(i).ajouterQuartierDansMain(pioche.piocher());
 		}
 		generateur = new Random();
 		plateau.getJoueur(generateur.nextInt(plateau.getNombreJoueurs())).setPossedeCouronne(true);
@@ -103,7 +104,12 @@ public class Jeu {
 	}
 	
 	private boolean partieFinie() {
-		return true;
+		for(int i=0; i<plateau.getNombreJoueurs(); i++){
+			if(this.plateau.getJoueur(i).nbQuartiersDansCite() == 8) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void tourDeJeu() {
@@ -251,7 +257,27 @@ public class Jeu {
 	}
 	
 	private void calculDesPoints() {
-		
+		ArrayList<Integer> scoreJoueurs = new ArrayList<Integer>();
+		int scoreTotal;
+		ArrayList<String> categorieQuartier = new ArrayList<String>();
+		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+			scoreTotal = 0;
+			categorieQuartier.clear();
+			for(int j=0;j<plateau.getJoueur(i).nbQuartiersDansCite();j++) {
+				scoreTotal += plateau.getJoueur(i).getCite()[j].getCout();
+				if(!categorieQuartier.contains(plateau.getJoueur(i).getCite()[j].getType())) //Test si le type de quartier est deja present ou non
+					categorieQuartier.add(plateau.getJoueur(i).getCite()[j].getType());
+			}
+			if(categorieQuartier.size() == 5) //Si la taille est egal a 5 alors ils contient dans sa cite tout les quartiers differents
+				scoreTotal += 3;
+			if(plateau.getJoueur(i).nbQuartiersDansCite() == 8) {
+				if(plateau.getJoueur(i).isTermineePremier())
+					scoreTotal += 4;
+				else
+					scoreTotal += 2;
+			}
+			scoreJoueurs.add(scoreTotal);
+		}
 	}
 
 }
