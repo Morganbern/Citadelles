@@ -85,10 +85,10 @@ public abstract class Personnage{
 		this.plateau = plateau;
 	}
 
-	abstract void utiliserPouvoir();
+	public abstract void utiliserPouvoir();
 	
 	
-	abstract void utiliserPouvoirAvatar();
+	public abstract void utiliserPouvoirAvatar();
     
     public void reinitialiser() {
         if(this.joueur != null)

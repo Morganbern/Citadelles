@@ -119,6 +119,7 @@ public class Jeu {
 		for (Personnage perso : listeDePersonnage) {
 			if (!perso.getAssassine()){
 				if(perso.getVole()) {
+					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
 //					idJoueurVoleur();
 //					int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
 //		    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
@@ -126,9 +127,31 @@ public class Jeu {
 				}
 				percevoirRessource(perso);
 				perso.percevoirRessourcesSpecifiques();
-				System.out.println("Voulez-vous utiliser votre pouvoir ?");
-				
+				if(!perso.getJoueur().getIsBot()) {
+					System.out.println("Voulez-vous utiliser votre pouvoir ?");
+					boolean choix = Interaction.lireOuiOuNon();
+					if(choix) perso.utiliserPouvoir();
 					
+					System.out.println("Voulez-vous construire un Quartier");
+					if(choix) {
+						// afficher la main
+						int index = 1;
+						for(Quartier quartier : perso.getJoueur().getMain()) {
+							System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
+							index ++;
+						}
+						int QuartierACstruire;
+						do {
+							System.out.println("Qu'elle quartier voulez-vous construire ?");
+							QuartierACstruire = Interaction.lireUnEntier(1, index);
+						}while(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout() < perso.getJoueur().nbPieces());
+									
+						
+					}
+				}else {
+					generateur = new Random();
+					if(generateur.nextInt(1,3)==1) perso.utiliserPouvoirAvatar();
+				}
 				
 				
 				
@@ -152,7 +175,7 @@ public class Jeu {
 		generateur = new Random();
 		
 		for (int i=0; i<1; i++) {
-			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
+			NcarteEcarte = generateur.nextInt(0,listeDePersonnage.size()+1);
 			System.out.println("Le Personnage " + listeDePersonnage.get(NcarteEcarte)+ "est écarté face visible");
 			CarteEcarteVisible[i] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
@@ -160,7 +183,7 @@ public class Jeu {
 		
 		// ecarter deux cartes faces cachées
 		for (int i=0; i<1; i++) {
-			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
+			NcarteEcarte = generateur.nextInt(0,listeDePersonnage.size()+1);
 			System.out.println("Un personnage est  ́ecarté face cachée");
 			CarteEcarteCache[i] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
@@ -231,20 +254,30 @@ public class Jeu {
 			System.out.println("2. Prendre deux cartes de la pioche, une carte sera ensuite défaussée");
 		}
 		
-		if(!perso.getJoueur().getIsBot()) {
+		generateur = new Random();
+		int choix  = (!perso.getJoueur().getIsBot())? Interaction.lireUnEntier(1, 2): generateur.nextInt(1,3);
+		
 			
-		}
-			int choix = Interaction.lireUnEntier(1, 2);
 			if(choix ==1) {
 				perso.ajouterPieces();
 			}else {
 				ArrayList<Quartier> cartes = new ArrayList<Quartier>();
-				for(int i=1; i<2; i++) {
-					cartes.add(this.plateau.getPioche().piocher());
-					System.out.println(i + ". "+ cartes.get(i-1));
+				
+				
+				if(!perso.getJoueur().getIsBot()) {
+					for(int i=1; i<2; i++) {
+						cartes.add(this.plateau.getPioche().piocher());
+						System.out.println(i + ". "+ cartes.get(i-1));
+					}
+					System.out.println("Qu'elles carte souhaité vous garder ?");
+					choix = Interaction.lireUnEntier(1,2);
+					
+				}else {
+					for(int i=1; i<2; i++) {
+						cartes.add(this.plateau.getPioche().piocher());
+					}
+					choix = generateur.nextInt(1,3)
 				}
-				System.out.println("Qu'elles carte souhaité vous garder ?");
-				choix = Interaction.lireUnEntier(1,2);
 				perso.ajouterQuartier(cartes.get(choix));
 				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 2:1));
 			}
