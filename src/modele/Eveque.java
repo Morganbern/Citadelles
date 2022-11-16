@@ -18,11 +18,10 @@ public class Eveque extends Personnage{
 		System.out.println("Vous avez " + nbBatRel + " batiment(s) religieux. Vous recevez donc "+ nbBatRel +" piece(s) d'or.");
     }
 
-	void utiliserPouvoir() {
+	public void utiliserPouvoir() {
 	}
 
-	@Override
-	void utiliserPouvoirAvatar() {
+	public void utiliserPouvoirAvatar() {
 	} 
     
 }

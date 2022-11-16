@@ -22,7 +22,7 @@ public class Condottiere extends Personnage{
     }
     
 	@Override
-	void utiliserPouvoir() {
+	public void utiliserPouvoir() {
 		System.out.print("Voulez-vous utiliser votre pouvoir de destruction ? ");
 		if(Interaction.lireOuiOuNon()){
 	    	int choixJ,choixQ = 0;

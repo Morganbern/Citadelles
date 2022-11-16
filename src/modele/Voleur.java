@@ -44,14 +44,12 @@ public class Voleur extends Personnage{
     }
 
 	@Override
-	void utiliserPouvoirAvatar() {
+	public void utiliserPouvoirAvatar() {
 		Random generateur = new Random();
     	int choix;
     	do {
-    		System.out.print("Votre choix : ");
     		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1; // quel personnage voler ?
     		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix-1).getRang() == 1 || this.getPlateau().getPersonnage(choix-1).getAssassine()) {
-    			System.out.println("Vous ne pouvez voler ce joueur.");
     			choix = -1;
     		}
     			

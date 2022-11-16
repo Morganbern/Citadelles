@@ -15,8 +15,9 @@ import java.util.ArrayList;
 public class TestMagicienne {
 	public static void main(String[] args) {
 		TestMagicienne test = new TestMagicienne();
-		//test.test1();
-		test.test2();	
+//		test.test1();
+//		test.test2();	
+		test.test3();	
 	}
 	
 	public void test1() {
@@ -124,9 +125,103 @@ public class TestMagicienne {
 			System.out.print(mainMagicienne.get(i).getNom() + ", ");
 		System.out.println("");
 		
-		// on v�rifie que la taille de la pioche n'a pas chang�:
+		// on v�rifie que la taille de la pioche n'a pas changé:
 		Test.test(taillePiocheAvantPouvoir==pioche.nombreElements(), 
-				"taille inchang�e de la pioche");
+				"taille inchangée de la pioche");
+	}
+	
+	public void test3() {
+		System.out.println("TEST DU POUVOIR DE LA MAGICIENNE (AVATAR)");
+		PlateauDeJeu plateau = new PlateauDeJeu();
+		
+		// cr�ation de quatre personnages
+		Roi roi = new Roi();
+		plateau.ajouterPersonnage(roi);
+		Assassin assassin = new Assassin();
+		plateau.ajouterPersonnage(assassin);
+		Magicienne magicienne = new Magicienne();
+		plateau.ajouterPersonnage(magicienne);
+			
+		// cr�ation de trois joueurs
+		Joueur joueur1 = new Joueur("Milou");
+		plateau.ajouterJoueur(joueur1);
+		Joueur joueur2 = new Joueur("Billy");
+		plateau.ajouterJoueur(joueur2);
+		Joueur joueur3 = new Joueur("Belle");
+		plateau.ajouterJoueur(joueur3);
+			
+		// on associe les personnages aux joueurs
+		roi.setJoueur(joueur1);
+		assassin.setJoueur(joueur2);
+		magicienne.setJoueur(joueur3);
+		
+		// cr�ation d'une pioche:
+		Pioche pioche = plateau.getPioche();
+		Quartier q = new Quartier("temple",Quartier.TYPE_QUARTIERS[0],1); pioche.ajouter(q);
+		q = new Quartier("prison",Quartier.TYPE_QUARTIERS[1],2); pioche.ajouter(q);
+		q = new Quartier("palais",Quartier.TYPE_QUARTIERS[2],5); pioche.ajouter(q);
+		q = new Quartier("taverne",Quartier.TYPE_QUARTIERS[3],1); pioche.ajouter(q);
+		q = new Quartier("�choppe",Quartier.TYPE_QUARTIERS[3],2); pioche.ajouter(q);
+		q = new Quartier("basilique",Quartier.TYPE_QUARTIERS[4],4,"A la fin de la partie, ..."); 
+		pioche.ajouter(q);
+		q = new Quartier("cath�drale",Quartier.TYPE_QUARTIERS[0],5); pioche.ajouter(q);
+		q = new Quartier("caserne",Quartier.TYPE_QUARTIERS[1],3); pioche.ajouter(q);
+		q = new Quartier("manoir",Quartier.TYPE_QUARTIERS[2],3); pioche.ajouter(q);
+		q = new Quartier("h�tel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
+		q = new Quartier("biblioth�que",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
+		pioche.ajouter(q);
+		pioche.melanger();
+		
+		// on distribue les cartes aux joueurs:
+		joueur1.ajouterQuartierDansMain(pioche.piocher());
+		joueur1.ajouterQuartierDansMain(pioche.piocher());
+		joueur1.ajouterQuartierDansMain(pioche.piocher());
+		joueur2.ajouterQuartierDansMain(pioche.piocher());
+		joueur2.ajouterQuartierDansMain(pioche.piocher());
+		joueur2.ajouterQuartierDansMain(pioche.piocher());
+		joueur3.ajouterQuartierDansMain(pioche.piocher());
+		joueur3.ajouterQuartierDansMain(pioche.piocher());
+		
+		// on affiche la main de chaque joueur:
+		System.out.print("Main du Roi (" + roi.getJoueur().getNom() + "): ");
+		ArrayList<Quartier> mainRoi = roi.getJoueur().getMain();
+		for(int i = 0; i< mainRoi.size(); i++)
+			System.out.print(mainRoi.get(i).getNom() + ", ");
+		System.out.println("");
+		System.out.print("Main de l'assassin (" + assassin.getJoueur().getNom() + "): ");
+		ArrayList<Quartier> mainAssassin = assassin.getJoueur().getMain();
+		for(int i = 0; i< mainAssassin.size(); i++)
+			System.out.print(mainAssassin.get(i).getNom() + ", ");
+		System.out.println("");
+		System.out.print("Main de la magicienne (" + magicienne.getJoueur().getNom() + "): ");
+		ArrayList<Quartier> mainMagicienne = magicienne.getJoueur().getMain();
+		for(int i = 0; i< mainMagicienne.size(); i++)
+			System.out.print(mainMagicienne.get(i).getNom() + ", ");
+		System.out.println("");
+				
+		// on r�cup�re la taille de la pioche:
+		int taillePiocheAvantPouvoir = pioche.nombreElements();
+		
+		// utiliser le pouvoir de la magicienne :		
+		magicienne.utiliserPouvoirAvatar();
+		
+		// on r�affiche la main de chaque joueur:
+		System.out.print("Main du Roi (" + roi.getJoueur().getNom() + "): ");
+		for(int i = 0; i< mainRoi.size(); i++)
+			System.out.print(mainRoi.get(i).getNom() + ", ");
+		System.out.println("");
+		System.out.print("Main de l'assassin (" + assassin.getJoueur().getNom() + "): ");
+		for(int i = 0; i< mainAssassin.size(); i++)
+			System.out.print(mainAssassin.get(i).getNom() + ", ");
+		System.out.println("");
+		System.out.print("Main de la magicienne (" + magicienne.getJoueur().getNom() + "): ");
+		for(int i = 0; i< mainMagicienne.size(); i++)
+			System.out.print(mainMagicienne.get(i).getNom() + ", ");
+		System.out.println("");
+		
+		// on v�rifie que la taille de la pioche n'a pas changé:
+		Test.test(taillePiocheAvantPouvoir==pioche.nombreElements(), 
+				"taille inchangée de la pioche");
 	}
 	
 }

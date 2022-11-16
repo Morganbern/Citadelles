@@ -24,7 +24,7 @@ public class Marchande extends Personnage{
 	}
 
 	@Override
-	void utiliserPouvoirAvatar() {
+	public void utiliserPouvoirAvatar() {
 		this.getJoueur().ajouterPieces(1);
 	} 
     

@@ -39,7 +39,7 @@ public class Assassin extends Personnage{
     }
 
 	@Override
-	void utiliserPouvoirAvatar() {
+	public void utiliserPouvoirAvatar() {
 		Random generateur = new Random();
 		int choix;
     	do {

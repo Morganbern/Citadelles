@@ -14,7 +14,7 @@ public class Architecte extends Personnage{
 	}
 
 	@Override
-	void utiliserPouvoirAvatar() {
+	public void utiliserPouvoirAvatar() {
 		this.utiliserPouvoir();
 	}
     

@@ -7,8 +7,9 @@ import modele.Roi;
 public class TestAssassin {
 	public static void main(String[] args) {
 		TestAssassin test = new TestAssassin();
-		test.test1();
-		test.test2();	
+		//test.test1();
+		//test.test2();
+		test.test3();
 	}
 	
 	public void test1() {
@@ -24,6 +25,7 @@ public class TestAssassin {
 		Test.test(plateau.getPersonnage(1).getRang()==1,
 				"r�cup�ration du rang");		
 	}
+	
 	public void test2() {
 		System.out.println("TEST DE L'ASSASSINAT DU ROI");
 		PlateauDeJeu plateau = new PlateauDeJeu();
@@ -35,7 +37,20 @@ public class TestAssassin {
 		// on utilise le pouvoir de l'assassin
 		// NB: seul le roi peut �tre assassin� dans cette situation
 		assassin.utiliserPouvoir();
-		Test.test(roi.getAssassine(),"le roi est assassin�");
+		Test.test(roi.getAssassine(),"le roi est assassiné");
 	}
 	
+	public void test3() {
+		System.out.println("TEST DE L'ASSASSINAT DU ROI (AVATAR)");
+		PlateauDeJeu plateau = new PlateauDeJeu();
+		Roi roi = new Roi();
+		plateau.ajouterPersonnage(roi);
+		Assassin assassin = new Assassin();
+		plateau.ajouterPersonnage(assassin);
+		
+		// on utilise le pouvoir de l'assassin
+		// NB: seul le roi peut �tre assassin� dans cette situation
+		assassin.utiliserPouvoirAvatar();
+		Test.test(roi.getAssassine(),"le roi est assassiné");
+	}
 }
