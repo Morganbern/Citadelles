@@ -9,16 +9,17 @@ public class TestRoi {
 
 	public static void main(String[] args) {
 		TestRoi testRoi= new TestRoi();
-		testRoi.test1();
-		testRoi.test2();	
-		testRoi.test3();
-		testRoi.test4();
-		testRoi.test5();
-		testRoi.test6();
-		testRoi.test7();
-		testRoi.test8();
-		testRoi.test9();
-		testRoi.test10();
+//		testRoi.test1();
+//		testRoi.test2();	
+//		testRoi.test3();
+//		testRoi.test4();
+//		testRoi.test5();
+//		testRoi.test6();
+//		testRoi.test7();
+//		testRoi.test8();
+//		testRoi.test9();
+//		testRoi.test10();
+		testRoi.test11();
 	}
 	
 	public void test1(){
@@ -143,5 +144,17 @@ public class TestRoi {
 		Test.test(roi.getJoueur() == null, "test du joueur non attribu�");
 		Test.test(roi.getAssassine() == false, "test de l'assassinat du personnage");
 		Test.test(roi.getVole() == false, "test du vol du personnage");
+	}
+	public void test11(){
+		System.out.println("TEST DE L'UTILISATION DU POUVOIR DU ROI (AVATAR)");
+		Joueur joueur = new Joueur("Billy");
+		Roi roi = new Roi();
+		roi.utiliserPouvoirAvatar();
+		Test.test(roi.getJoueur() == null,
+				"test alors que le joueur n'est pas attribu�");
+		roi.setJoueur(joueur);
+		Test.test(roi.getJoueur().getPossedeCouronne() == false, "test avant utilisation");
+		roi.utiliserPouvoir();
+		Test.test(roi.getJoueur().getPossedeCouronne() == true, "test apr�s utilisation");
 	}
 }

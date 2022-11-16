@@ -9,8 +9,9 @@ public class TestMarchande {
 
 	public static void main(String[] args) {
 		TestMarchande test= new TestMarchande();
-		test.test1();
-		test.test2();	
+		//test.test1();
+		//test.test2();
+		test.test3();
 	}
 	
 	public void test1(){
@@ -43,7 +44,19 @@ public class TestMarchande {
 			"test du nombre de pi�ces d'or apr�s perception de ressources sp�cifiques avec 2 quartiers commer�ants");
 		marchande.utiliserPouvoir();
 		Test.test(marchande.getJoueur().nbPieces() == 5,
-				"test du nombre de pi�ces d'or apr�s utilisation du pouvoir");
-			
+				"test du nombre de pi�ces d'or apr�s utilisation du pouvoir");	
+	}
+	public void test3(){
+		System.out.println("TEST DE L'UTILISATEUR DU POUVOIR (AVATAR)");
+		Joueur joueur = new Joueur("Billy");
+		Marchande marchande = new Marchande();
+		Quartier quartier1 = new Quartier("taverne",Quartier.TYPE_QUARTIERS[3],1);
+		Quartier quartier2 = new Quartier("prison",Quartier.TYPE_QUARTIERS[1],2);
+		Quartier quartier3 = new Quartier("�choppe",Quartier.TYPE_QUARTIERS[3],2);
+		marchande.setJoueur(joueur);
+		marchande.ajouterPieces(); // 2 pieces pour le joueur
+		marchande.utiliserPouvoirAvatar();
+		Test.test(marchande.getJoueur().nbPieces() == 3,
+				"test du nombre de pièces d'or après utilisation du pouvoir pour avatar");	
 	}
 }

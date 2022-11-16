@@ -1,4 +1,6 @@
 package modele;
+import java.util.Random;
+
 import controleur.Interaction;
 
 
@@ -34,6 +36,21 @@ public class Assassin extends Personnage{
     	}
     	while(choix == -1);
     	this.getPlateau().getPersonnage(choix-1).setAssassine();
-    } 
+    }
+
+	@Override
+	public void utiliserPouvoirAvatar() {
+		Random generateur = new Random();
+		int choix;
+    	do {
+    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1;
+    		if(choix == this.indiceAssassin()+1) {
+    			choix = -1;
+    		}
+    			
+    	}
+    	while(choix == -1);
+    	this.getPlateau().getPersonnage(choix-1).setAssassine();
+	} 
     
 }
