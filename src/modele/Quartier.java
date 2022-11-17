@@ -1,6 +1,10 @@
 package modele;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
+import controleur.Interaction;
 
 public class Quartier {
 	public static final String[] TYPE_QUARTIERS = {"RELIGIEUX", "MILITAIRE", "NOBLE", "COMMERCANT", "MERVEILLE"};
@@ -74,6 +78,37 @@ public class Quartier {
 	}
 	public void setCaracteristiques(String caracteristiques) {
 		this.caracteristiques = caracteristiques;
+	}
+	
+	public int calculDesPointsMerveilles(Joueur joueur) {
+		switch (this.nom){
+		case "Capitole": {
+			ArrayList<String> tabTypeQuartier = new ArrayList<String>();
+			for(int i=0; i<joueur.nbQuartiersDansCite();i++) {
+				tabTypeQuartier.add(joueur.getCite()[i].type);
+			}
+			for (int i=0; i<5; i++) {
+				if(Collections.frequency(tabTypeQuartier, TYPE_QUARTIERS[i]) >= 3)
+					return 3;
+			}
+			return 0;
+		}
+		case "Cours des Miracles": {
+			System.out.println("Choisissez le type de quartier que vous voulez associez à 'Cours des Miracles'");
+			for (int i=0; i<5; i++) {
+				System.out.println((i+1) + ": " + TYPE_QUARTIERS[i]);
+			}
+			int choixType = Interaction.lireUnEntier(1, 6);
+			this.type = TYPE_QUARTIERS[choixType];
+		}
+		case "Statue Equestre": {
+			if(joueur.getPossedeCouronne()) {
+				return 5;
+			}
+		}
+		default:
+			return 0;
+		}
 	}
 	
 }

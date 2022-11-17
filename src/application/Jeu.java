@@ -282,7 +282,7 @@ public class Jeu {
 					for(int i=1; i<2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 					}
-					choix = generateur.nextInt(1,3)
+					choix = generateur.nextInt(1,3);
 				}
 				perso.ajouterQuartier(cartes.get(choix));
 				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 2:1));
@@ -297,7 +297,8 @@ public class Jeu {
 			scoreTotal = 0;
 			categorieQuartier.clear();
 			for(int j=0;j<plateau.getJoueur(i).nbQuartiersDansCite();j++) {
-				scoreTotal += plateau.getJoueur(i).getCite()[j].getCout();
+				scoreTotal += plateau.getJoueur(i).getCite()[j].getCout(); //additionner le prix de tout les quartiers de la cite de chaque joueur
+				scoreTotal += plateau.getJoueur(i).getCite()[j].calculDesPointsMerveilles(plateau.getJoueur(i));
 				if(!categorieQuartier.contains(plateau.getJoueur(i).getCite()[j].getType())) //Test si le type de quartier est deja present ou non
 					categorieQuartier.add(plateau.getJoueur(i).getCite()[j].getType());
 			}
@@ -312,5 +313,20 @@ public class Jeu {
 			scoreJoueurs.add(scoreTotal);
 		}
 	}
-
+	
+	private void updateTermineePremier() {
+		boolean countTerminee = false;
+		for(int i=0; i<plateau.getNombreJoueurs();i++) {
+			if(plateau.getJoueur(i).isTermineePremier())
+				countTerminee = true;
+		}
+		if(!countTerminee) {
+			for(int i=0; i<plateau.getNombreJoueurs();i++) {
+				if(plateau.getJoueur(i).nbQuartiersDansCite() == 8) {
+					plateau.getJoueur(i).setTermineePremier(true);
+					return;
+				}
+			}
+		}
+	}
 }
