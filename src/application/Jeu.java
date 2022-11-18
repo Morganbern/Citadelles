@@ -292,7 +292,23 @@ public class Jeu {
 			}
 			scoreJoueurs.add(scoreTotal);
 		}
+	    int max;
+	    int indice;
+	    System.out.println("---- AFFICHAGE DES SCORES ----");
+		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+		    max = 0;
+		    indice = 0;
+		    for(int j=0; j<scoreJoueurs.size(); j++){ //Trouver le meilleur score et l'indice correspondant
+		        if(scoreJoueurs.get(j) >= max){
+		            max = scoreJoueurs.get(j);
+		            indice = j;
+		        }
+		    }
+		    System.out.println(i + " -> " + plateau.getJoueur(indice).getNom() + " avec " + scoreJoueurs.get(indice) + "points.");
+		    scoreJoueurs.remove(indice);
+		}
 	}
+
 	
 	private void updateTermineePremier() {
 		boolean countTerminee = false;
@@ -308,5 +324,13 @@ public class Jeu {
 				}
 			}
 		}
+	}
+	
+	private boolean joueurAChantier(Joueur joueur) {
+		if(joueur.isQuartierDansSaCite("Chantier")) {
+			System.out.println("Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
+			return Interaction.lireOuiOuNon();				
+		}
+		return false;
 	}
 }

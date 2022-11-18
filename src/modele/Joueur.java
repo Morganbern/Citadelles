@@ -145,6 +145,14 @@ public class Joueur {
 		return (this.main.size() <=0  || index==-1) ?null : this.main.remove(index);
 	}
 	
+	public boolean isQuartierDansSaCite(String nomQuartier) {
+		for(int j=0;j<nbQuartiersDansCite();j++) {
+			if(getCite()[j].getNom().equals("nomQuartier"))
+				return true;
+		}
+		return false;
+	}
+	
 	public void reinitialiser() { 
 		this.tresor = 0;
 		this.main.clear();
