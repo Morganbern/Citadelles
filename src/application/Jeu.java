@@ -133,6 +133,7 @@ public class Jeu {
 				}
 				percevoirRessource(perso);
 				perso.percevoirRessourcesSpecifiques();
+	
 				if(!perso.getJoueur().getIsBot()) {
 					System.out.println("Voulez-vous utiliser votre pouvoir ?");
 					boolean choix = Interaction.lireOuiOuNon();
@@ -141,6 +142,7 @@ public class Jeu {
 					System.out.println("Voulez-vous construire un Quartier");
 					if(choix) {
 						// afficher la main
+						System.out.println("0. Ne pas construire un Quartier");
 						int index = 1;
 						for(Quartier quartier : perso.getJoueur().getMain()) {
 							System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
@@ -150,13 +152,27 @@ public class Jeu {
 						do {
 							System.out.println("Qu'elle quartier voulez-vous construire ?");
 							QuartierACstruire = Interaction.lireUnEntier(1, index);
-						}while(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout() < perso.getJoueur().nbPieces());
-									
+						}while(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout() < perso.getJoueur().nbPieces() || QuartierACstruire ==0);
+						if(QuartierACstruire != 0) {
+							perso.construire(perso.getJoueur().getMain().get(QuartierACstruire-1));
+							perso.getJoueur().retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire-1));
+						}
 						
 					}
 				}else {
 					generateur = new Random();
-					if(generateur.nextInt(1,3)==1) perso.utiliserPouvoirAvatar();
+					if(generateur.nextBoolean()) perso.utiliserPouvoirAvatar();
+					ArrayList<Quartier> ListeDeQuartierAchetable = new ArrayList<Quartier>();
+							
+					if(generateur.nextBoolean()) {
+						for(Quartier quartier : perso.getJoueur().getMain()) {
+							if (quartier.getCout() < perso.getJoueur().nbPieces()) ListeDeQuartierAchetable.add(quartier);
+						}
+						int QuartierACstruire = generateur.nextInt(0, ListeDeQuartierAchetable.size());
+					}
+					
+					
+					
 				}
 				
 				
@@ -203,9 +219,7 @@ public class Jeu {
 		
 		int JoueurAvecCouronne = 0;
 		
-		while(!plateau.getJoueur(JoueurAvecCouronne).getPossedeCouronne()){
-			JoueurAvecCouronne++;
-		}
+		while(!plateau.getJoueur(JoueurAvecCouronne).getPossedeCouronne()) JoueurAvecCouronne++;
 
 		Joueur JoueurCouronne = plateau.getJoueur(JoueurAvecCouronne);
 		System.out.println("Le joueur" + JoueurCouronne + " à la couronne ! ");
@@ -218,6 +232,7 @@ public class Jeu {
 			for (int index= 0; index<listeDePersonnage.size();index++) {
 				System.out.println((index+1) + " " + listeDePersonnage.get(index));
 			}
+			
 			System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
 			int choixPersonnage = Interaction.lireUnEntier();
 			listeDePersonnage.get(choixPersonnage).setJoueur(JoueurCouronne);
@@ -268,8 +283,6 @@ public class Jeu {
 				perso.ajouterPieces();
 			}else {
 				ArrayList<Quartier> cartes = new ArrayList<Quartier>();
-				
-				
 				if(!perso.getJoueur().getIsBot()) {
 					for(int i=1; i<2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
@@ -282,10 +295,11 @@ public class Jeu {
 					for(int i=1; i<2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 					}
-					choix = generateur.nextInt(1,3)
+					choix = generateur.nextInt(1,3);
 				}
 				perso.ajouterQuartier(cartes.get(choix));
 				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 2:1));
+				
 			}
 	}
 	

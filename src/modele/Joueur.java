@@ -134,6 +134,17 @@ public class Joueur {
 		return (this.main.size() <=0) ?null : this.main.remove(numeroHasard);
 	}
 	
+	public Quartier retirerQuartierChoisieDansMain(Quartier quartier) {
+		int i=0, index=-1;
+		for(Quartier quart : this.main) {
+			i++;
+			if (quart == quartier) {
+				index = i;
+			}
+		}
+		return (this.main.size() <=0  || index==-1) ?null : this.main.remove(index);
+	}
+	
 	public void reinitialiser() { 
 		this.tresor = 0;
 		this.main.clear();
