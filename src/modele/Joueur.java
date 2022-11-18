@@ -3,6 +3,8 @@ package modele;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controleur.Interaction;
+
 public class Joueur {
 	private String nom;
 	private int tresor;
@@ -149,6 +151,17 @@ public class Joueur {
 		for(int j=0;j<nbQuartiersDansCite();j++) {
 			if(getCite()[j].getNom().equals("nomQuartier"))
 				return true;
+		}
+		return false;
+	}
+	
+	private boolean joueurAChantier() {
+		if(isQuartierDansSaCite("Chantier")) {
+			System.out.println("Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
+			if(Interaction.lireOuiOuNon()) {
+				retirerQuartierDansCite("Chantier");
+				return true;
+			}
 		}
 		return false;
 	}
