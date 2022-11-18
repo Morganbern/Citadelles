@@ -121,7 +121,11 @@ public abstract class Personnage{
 						!(this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom())) ||
 						!choix
 						){
+<<<<<<< HEAD
 					System.out.println("Souhaitez-vous toujours construire une quartier ?");
+=======
+					System.out.println("Souhaitez-vous toujours construire un quartier ?");
+>>>>>>> d1b85d85da0f614a85e9c326c9cfad00806ae2df
 					choix = generateur.nextBoolean();
 					if (choix) {
 						System.out.println("Quel quartier voulez-vous construire ?");

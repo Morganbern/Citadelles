@@ -328,14 +328,4 @@ public class Jeu {
 		}
 	}
 	
-	private boolean joueurAChantier(Joueur joueur) {
-		if(joueur.isQuartierDansSaCite("Chantier")) {
-			System.out.println("Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
-			if(Interaction.lireOuiOuNon()) {
-				joueur.retirerQuartierDansCite("Chantier");
-				return true;
-			}
-		}
-		return false;
-	}
 }
