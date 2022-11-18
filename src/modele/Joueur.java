@@ -155,7 +155,7 @@ public class Joueur {
 		return false;
 	}
 	
-	private boolean joueurAChantier() {
+	public boolean joueurAChantier() {
 		if(isQuartierDansSaCite("Chantier")) {
 			System.out.println("Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
 			if(Interaction.lireOuiOuNon()) {
