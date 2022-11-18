@@ -55,7 +55,9 @@ public class Jeu {
 			tourDeJeu();
 			gestionCouronne();
 			reinitialisationPersonnages();
-		}while(!partieFinie());	
+		}while(!partieFinie());
+		calculDesPoints();
+		
 	}
 	
 	private void initialisation() {
@@ -126,11 +128,10 @@ public class Jeu {
 			if (!perso.getAssassine()){
 				if(perso.getVole()) {
 					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
-					
-//					idJoueurVoleur();
-//					int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
-//		    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
-//		    		this.getPlateau().getPersonnage(choix-1).getJoueur().retirerPieces(nbPiecesAVoler);
+					int idVoleur = idJoueurVoleur();
+					int nbPiecesAVoler = perso.getJoueur().nbPieces();
+					perso.getJoueur().retirerPieces(nbPiecesAVoler);
+		    		this.plateau.getJoueur(idVoleur).ajouterPieces(nbPiecesAVoler);
 				}
 				percevoirRessource(perso);
 				perso.percevoirRessourcesSpecifiques();
@@ -145,7 +146,8 @@ public class Jeu {
 					if(generateur.nextBoolean()) perso.utiliserPouvoirAvatar();
 				}
 				perso.construire();
-			}	
+			}
+			updateTermineePremier();
 		}
 	}
 		
