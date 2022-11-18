@@ -3,7 +3,7 @@ package application;
 import modele.PlateauDeJeu;
 
 public class Application {
-	Jeu jeu;
+	private static Jeu jeu;
 	
 	public void main() {
 		jeu = new Jeu(new PlateauDeJeu());

@@ -9,7 +9,6 @@ import modele.Personnage;
 import modele.Pioche;
 import modele.PlateauDeJeu;
 import modele.Quartier;
-import modele.Joueur;
 
 public class Jeu {
 	private PlateauDeJeu plateau;
@@ -155,8 +154,8 @@ public class Jeu {
 	private void choixPersonnages() {
 		
 		ArrayList<Personnage> listeDePersonnage = new ArrayList<Personnage>();
-		Personnage[] CarteEcarteVisible = new Personnage[1];
-		Personnage[] CarteEcarteCache = new Personnage[1];
+		Personnage[] CarteEcarteVisible = new Personnage[2];
+		Personnage[] CarteEcarteCache = new Personnage[2];
 		int NcarteEcarte;
 		for(int i=0;i<plateau.getNombrePersonnages();i++) {
 			listeDePersonnage.add(plateau.getPersonnage(i));
@@ -164,17 +163,17 @@ public class Jeu {
 		// ecarter deux cartes faces visibles
 		generateur = new Random();
 		
-		for (int i=0; i<1; i++) {
-			NcarteEcarte = generateur.nextInt(0,listeDePersonnage.size()+1);
-			System.out.println("Le Personnage " + listeDePersonnage.get(NcarteEcarte)+ "est écarté face visible");
+		for (int i=0; i<2; i++) {
+			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
+			System.out.println("Le Personnage " + listeDePersonnage.get(NcarteEcarte).getNom()+ " est écarté face visible");
 			CarteEcarteVisible[i] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
 		}
 		
 		// ecarter deux cartes faces cachées
-		for (int i=0; i<1; i++) {
-			NcarteEcarte = generateur.nextInt(0,listeDePersonnage.size()+1);
-			System.out.println("Un personnage est  ́ecarté face cachée");
+		for (int i=0; i<2; i++) {
+			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
+			System.out.println("Un personnage est ́ecarté face cachée");
 			CarteEcarteCache[i] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
 		}
@@ -190,21 +189,21 @@ public class Jeu {
 		while(!plateau.getJoueur(JoueurAvecCouronne).getPossedeCouronne()) JoueurAvecCouronne++;
 
 		Joueur JoueurCouronne = plateau.getJoueur(JoueurAvecCouronne);
-		System.out.println("Le joueur" + JoueurCouronne + " à la couronne ! ");
-		
-		if(JoueurCouronne.getIsBot()){
+		System.out.println("Le joueur " + JoueurCouronne.getNom() + " à la couronne ! ");
+		// La couronne choisi son personnage
+		if(JoueurCouronne.getIsBot()){ //couronne = bot
 			int RndmInt = generateur.nextInt(0,listeDePersonnage.size());
 			listeDePersonnage.get(RndmInt).setJoueur(JoueurCouronne);
 			listeDePersonnage.remove(RndmInt);
-		}else {
+		}else { //couronne = humain
 			for (int index= 0; index<listeDePersonnage.size();index++) {
-				System.out.println((index+1) + " " + listeDePersonnage.get(index));
+				System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 			}
 			
-			System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
-			int choixPersonnage = Interaction.lireUnEntier();
-			listeDePersonnage.get(choixPersonnage).setJoueur(JoueurCouronne);
-			listeDePersonnage.remove(choixPersonnage);
+			System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+			int choixPersonnage = Interaction.lireUnEntier(1,listeDePersonnage.size()+1);
+			listeDePersonnage.get(choixPersonnage-1).setJoueur(JoueurCouronne);
+			listeDePersonnage.remove(choixPersonnage-1);
 		}
 		
 		
