@@ -3,6 +3,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.Random;
 
+import application.Jeu;
 import controleur.Interaction;
 
 public abstract class Personnage{
@@ -110,24 +111,27 @@ public abstract class Personnage{
 				NbQuartierACstruire = generateur.nextInt(4);
 			}
 			
-			boolean choix; 
+			boolean choix=false; 
 			for (int i=0; i<NbQuartierACstruire;i++) {
 				System.out.println("Qu'elle quartier voulez-vous construire ?");
 				QuartierACstruire = Interaction.lireUnEntier(1,index);
-				while(this.joueur.getMain().get(QuartierACstruire-1).getCout() < this.joueur.nbPieces() ||
-						(this.joueur.IsQuartierDansSaCite("Carrière")) ||
-						!(this.joueur.IsQuartierDansSaCite(Main.get(QuartierACstruire-1))) ||
+				while(this.joueur.getMain().get(QuartierACstruire-1).getCout() > this.joueur.nbPieces() ||
+						!(this.joueur.isQuartierDansSaCite("Carrière")) ||
+						!(this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom())) ||
 						!choix
 						){
 					System.out.println("Souhaitez-vous toujours construire une quartier");
 					choix = generateur.nextBoolean();
-					System.out.println("Qu'elle quartier voulez-vous construire ?");
-					QuartierACstruire = Interaction.lireUnEntier(1,index);
+					if (choix) {
+						System.out.println("Qu'elle quartier voulez-vous construire ?");
+						QuartierACstruire = Interaction.lireUnEntier(1,index);
+					}
 				}
 				
-				if(QuartierACstruire != 0) {
+				if(1<=QuartierACstruire && QuartierACstruire<=index) {
 					this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
 					this.joueur.retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire-1));
+					if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
 				}
 			}
 			
@@ -145,9 +149,10 @@ public abstract class Personnage{
 			for(Quartier quartier : perso.getJoueur().getMain()) {
 				if (quartier.getCout() < perso.getJoueur().nbPieces()) ListeDeQuartierAchetable.add(quartier);
 			}
-			int QuartierACstruire = generateur.nextInt(0, ListeDeQuartierAchetable.size());
-			perso.construire(perso.getJoueur().getMain().get(QuartierACstruire));
-			perso.getJoueur().retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire));
+			int QuartierACstruire = generateur.nextInt(ListeDeQuartierAchetable.size());
+			this.joueur.ajouterQuartierDansCite(this.joueur.getMain().get(QuartierACstruire));
+			this.joueur.retirerQuartierChoisieDansMain(this.joueur.getMain().get(QuartierACstruire));
+			this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
 		}
     }
     
