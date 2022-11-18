@@ -126,6 +126,7 @@ public class Jeu {
 			if (!perso.getAssassine()){
 				if(perso.getVole()) {
 					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
+					
 //					idJoueurVoleur();
 //					int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
 //		    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
@@ -139,50 +140,15 @@ public class Jeu {
 					boolean choix = Interaction.lireOuiOuNon();
 					if(choix) perso.utiliserPouvoir();
 					
-					System.out.println("Voulez-vous construire un Quartier");
-					if(choix) {
-						// afficher la main
-						System.out.println("0. Ne pas construire un Quartier");
-						int index = 1;
-						for(Quartier quartier : perso.getJoueur().getMain()) {
-							System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
-							index ++;
-						}
-						int QuartierACstruire;
-						do {
-							System.out.println("Qu'elle quartier voulez-vous construire ?");
-							QuartierACstruire = Interaction.lireUnEntier(1, index);
-						}while(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout() < perso.getJoueur().nbPieces() || QuartierACstruire ==0);
-						if(QuartierACstruire != 0) {
-							perso.construire(perso.getJoueur().getMain().get(QuartierACstruire-1));
-							perso.getJoueur().retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire-1));
-						}
-						
-					}
 				}else {
 					generateur = new Random();
 					if(generateur.nextBoolean()) perso.utiliserPouvoirAvatar();
-					ArrayList<Quartier> ListeDeQuartierAchetable = new ArrayList<Quartier>();
-							
-					if(generateur.nextBoolean()) {
-						for(Quartier quartier : perso.getJoueur().getMain()) {
-							if (quartier.getCout() < perso.getJoueur().nbPieces()) ListeDeQuartierAchetable.add(quartier);
-						}
-						int QuartierACstruire = generateur.nextInt(0, ListeDeQuartierAchetable.size());
-					}
-					
-					
-					
 				}
-				
-				
-				
-				
-				
-			}
+				perso.construire();
+			}	
 		}
-		
 	}
+		
 	
 	private void choixPersonnages() {
 		

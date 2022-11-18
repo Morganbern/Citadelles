@@ -1,5 +1,10 @@
 package modele;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import controleur.Interaction;
+
 public abstract class Personnage{
     private String nom;
     private int rang;
@@ -66,10 +71,85 @@ public abstract class Personnage{
             this.joueur.ajouterQuartierDansMain(nouveau);
     }
     
-    public void construire(Quartier nouveau) { 
-    	if (this.joueur != null && !this.assassine)
-            this.joueur.ajouterQuartierDansCite(nouveau);
-        }
+    public void construire() { 
+    	if (this.joueur == null || this.assassine) return;
+    	if (!this.joueur.getIsBot()) {
+    		PersoConstruitQuartier();
+    	}else {
+    		BotConstruitQuartier();
+    	}    	
+    }
+    
+    private void PersoConstruitQuartier() {
+    	
+    	Random generateur = new Random();
+    	Personnage perso = this.joueur.getPersonnage();
+    	
+    	if(perso.getNom().equals("Architecte")) {
+			System.out.println("Voulez-vous construire un ou des Quartiers ?");
+		}else {
+			System.out.println("Voulez-vous construire un Quartier");
+		}
+ 
+		if(Interaction.lireOuiOuNon()) {
+			
+			ArrayList<Quartier> Main = perso.getJoueur().getMain();
+			
+			// Afficher la main
+			int index=1;
+			for(Quartier quartier : Main) {
+				System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
+				index ++;
+			}
+			
+			int QuartierACstruire = 0;
+			int NbQuartierACstruire = 1;
+			
+			if(perso.getNom().equals("Architecte")) {
+				System.out.println("Combien de quartier souhaitez-vous construire? (Jusqu'à 3)");
+				NbQuartierACstruire = generateur.nextInt(4);
+			}
+			
+			boolean choix; 
+			for (int i=0; i<NbQuartierACstruire;i++) {
+				System.out.println("Qu'elle quartier voulez-vous construire ?");
+				QuartierACstruire = Interaction.lireUnEntier(1,index);
+				while(this.joueur.getMain().get(QuartierACstruire-1).getCout() < this.joueur.nbPieces() ||
+						(this.joueur.IsQuartierDansSaCite("Carrière")) ||
+						!(this.joueur.IsQuartierDansSaCite(Main.get(QuartierACstruire-1))) ||
+						!choix
+						){
+					System.out.println("Souhaitez-vous toujours construire une quartier");
+					choix = generateur.nextBoolean();
+					System.out.println("Qu'elle quartier voulez-vous construire ?");
+					QuartierACstruire = Interaction.lireUnEntier(1,index);
+				}
+				
+				if(QuartierACstruire != 0) {
+					this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
+					this.joueur.retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire-1));
+				}
+			}
+			
+			
+		}
+    }
+    
+    public void BotConstruitQuartier() {
+    	Random generateur = new Random();
+    	Personnage perso = this.joueur.getPersonnage();
+    	ArrayList<Quartier> ListeDeQuartierAchetable = new ArrayList<Quartier>();
+    	
+    	
+		if(generateur.nextBoolean()) {
+			for(Quartier quartier : perso.getJoueur().getMain()) {
+				if (quartier.getCout() < perso.getJoueur().nbPieces()) ListeDeQuartierAchetable.add(quartier);
+			}
+			int QuartierACstruire = generateur.nextInt(0, ListeDeQuartierAchetable.size());
+			perso.construire(perso.getJoueur().getMain().get(QuartierACstruire));
+			perso.getJoueur().retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire));
+		}
+    }
     
     public void percevoirRessourcesSpecifiques() { 
     	if (this.joueur != null && !this.assassine)
