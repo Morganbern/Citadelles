@@ -105,7 +105,7 @@ public class Condottiere extends Personnage{
 		    		}
 	    		}
 	    	}while(choixJ == -1 || choixQ == -1);
-	    	if(choixJ != 0) {
+	    	if(choixJ != 0 && !this.getPlateau().getJoueur(choixJ).isQuartierDansSaCite("Donjon")) {
 				System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
 				this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1);
 				this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom());
