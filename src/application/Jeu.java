@@ -117,7 +117,7 @@ public class Jeu {
 		choixPersonnages();
 		ArrayList<Personnage> listeDePersonnage = new ArrayList<Personnage>();
 		
-		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+		for(int i=0;i<plateau.getNombrePersonnages()-1;i++) {
 			listeDePersonnage.add(plateau.getPersonnage(i));
 		}
 		
@@ -207,9 +207,9 @@ public class Jeu {
 		}
 		
 		
-		int IndexJoueur = JoueurAvecCouronne ;
+		int IndexJoueur = JoueurAvecCouronne+1 ;
 
-		for(int i=0; i<listeDeJoueur.size()-1;i++) {
+		for(int i=0; i<listeDeJoueur.size();i++) {
 			
 			if (IndexJoueur>listeDeJoueur.size()) {
 				IndexJoueur = 0;
@@ -223,7 +223,7 @@ public class Jeu {
 				
 			}else {
 				for (int index= 0; index<listeDePersonnage.size();index++) {
-					System.out.println((index+1) + " " + listeDePersonnage.get(index));
+					System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 				}
 				System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
 				int choixPersonnage = Interaction.lireUnEntier();

@@ -48,7 +48,7 @@ public class Interaction {
 			boolean continu = true;
 			do {
 				try {
-					texte = sc.nextLine();
+					texte = sc.next();
 					if (texte.equals(new String("o")) || texte.equals(new String("oui"))) { 
 						b = true;
 						continu = false;

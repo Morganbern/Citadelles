@@ -83,7 +83,7 @@ public class Configuration {
 		}
 		
 		// Ajouter les bots
-		for(int bot=nbJoueur+1; bot<4; bot++) {
+		for(int bot=nbJoueur+1; bot<5; bot++) {
 			plateau.ajouterJoueur(new Joueur("Joueur"+bot));
 			plateau.getJoueur(bot-1).setIsBot(true);
 		}
