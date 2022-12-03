@@ -117,9 +117,18 @@ public class Jeu {
 		choixPersonnages();
 		ArrayList<Personnage> listeDePersonnage = new ArrayList<Personnage>();
 		
-		for(int i=0;i<plateau.getNombrePersonnages()-1;i++) {
+		// Récupération de Personnages qui n'ont pas de joueur
+		/*
+		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+			if(plateau.getPersonnage(i).)
 			listeDePersonnage.add(plateau.getPersonnage(i));
 		}
+		*/
+		
+		for(int i=0; i<plateau.getNombreJoueurs();i++) {
+			listeDePersonnage.add(plateau.getJoueur(i).getPersonnage());
+		}
+		
 		
 		listeDePersonnage.sort((o1, o2) -> Integer.toString(o1.getRang()).compareTo(Integer.toString(o2.getRang())));
 
@@ -136,7 +145,7 @@ public class Jeu {
 				perso.percevoirRessourcesSpecifiques();
 	
 				if(!perso.getJoueur().getIsBot()) {
-					System.out.println("Voulez-vous utiliser votre pouvoir ?");
+					System.out.println("Voulez-vous utiliser votre pouvoir ? oui/o, ou non/n");
 					boolean choix = Interaction.lireOuiOuNon();
 					if(choix) perso.utiliserPouvoir();
 					
@@ -209,11 +218,14 @@ public class Jeu {
 		
 		int IndexJoueur = JoueurAvecCouronne+1 ;
 
-		for(int i=0; i<listeDeJoueur.size();i++) {
+		for(int i=0; i<listeDeJoueur.size()-1;i++) {
 			
-			if (IndexJoueur>listeDeJoueur.size()) {
+			if (IndexJoueur>=listeDeJoueur.size()) {
 				IndexJoueur = 0;
 			}
+			
+			// Ligne pour tester
+			//System.out.println("Index joueur : " + IndexJoueur + " Taille de la liste : " + listeDeJoueur.size());
 			
 			Joueur joueur = listeDeJoueur.get(IndexJoueur);
 			if(joueur.getIsBot()){
@@ -226,7 +238,7 @@ public class Jeu {
 					System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 				}
 				System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
-				int choixPersonnage = Interaction.lireUnEntier();
+				int choixPersonnage = Interaction.lireUnEntier(1, listeDePersonnage.size());
 				listeDePersonnage.get(choixPersonnage).setJoueur(joueur);
 				listeDePersonnage.remove(choixPersonnage);
 			}
@@ -251,7 +263,7 @@ public class Jeu {
 			}else {
 				ArrayList<Quartier> cartes = new ArrayList<Quartier>();
 				if(!perso.getJoueur().getIsBot()) {
-					for(int i=1; i<2; i++) {
+					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 						System.out.println(i + ". "+ cartes.get(i-1));
 					}
@@ -259,7 +271,7 @@ public class Jeu {
 					choix = Interaction.lireUnEntier(1,2);
 					
 				}else {
-					for(int i=1; i<2; i++) {
+					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 					}
 					choix = generateur.nextInt(1,3);
