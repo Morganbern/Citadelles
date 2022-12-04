@@ -124,7 +124,7 @@ public class Jeu {
 		listeDePersonnage.sort((o1, o2) -> Integer.toString(o1.getRang()).compareTo(Integer.toString(o2.getRang())));
 
 		for (Personnage perso : listeDePersonnage) {
-			if (!perso.getAssassine()){
+			if (perso.getJoueur() != null && !perso.getAssassine()){
 				if(perso.getVole()) {
 					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
 					int idVoleur = idJoueurVoleur();
@@ -200,7 +200,7 @@ public class Jeu {
 				System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 			}
 			
-			System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+			System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié" + listeDePersonnage.size()+1);
 			int choixPersonnage = Interaction.lireUnEntier(1,listeDePersonnage.size()+1);
 			listeDePersonnage.get(choixPersonnage-1).setJoueur(JoueurCouronne);
 			listeDePersonnage.remove(choixPersonnage-1);
@@ -209,9 +209,9 @@ public class Jeu {
 		
 		int IndexJoueur = JoueurAvecCouronne+1 ;
 
-		for(int i=0; i<listeDeJoueur.size();i++) {
+		for(int i=0; i<listeDeJoueur.size()-1;i++) {
 			
-			if (IndexJoueur>listeDeJoueur.size()) {
+			if (IndexJoueur>listeDeJoueur.size()-1) {
 				IndexJoueur = 0;
 			}
 			
@@ -222,13 +222,13 @@ public class Jeu {
 				listeDePersonnage.remove(RndmInt);
 				
 			}else {
-				for (int index= 0; index<listeDePersonnage.size();index++) {
+				for (int index= 0; index<listeDePersonnage.size()-1;index++) {
 					System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 				}
-				System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
-				int choixPersonnage = Interaction.lireUnEntier();
-				listeDePersonnage.get(choixPersonnage).setJoueur(joueur);
-				listeDePersonnage.remove(choixPersonnage);
+				System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+				int choixPersonnage = Interaction.lireUnEntier(1,listeDePersonnage.size()+1);
+				listeDePersonnage.get(choixPersonnage-1).setJoueur(joueur);
+				listeDePersonnage.remove(choixPersonnage-1);
 			}
 			IndexJoueur++;
 		}
