@@ -133,7 +133,7 @@ public class Jeu {
 		listeDePersonnage.sort((o1, o2) -> Integer.toString(o1.getRang()).compareTo(Integer.toString(o2.getRang())));
 
 		for (Personnage perso : listeDePersonnage) {
-			if (!perso.getAssassine()){
+			if (perso.getJoueur() != null && !perso.getAssassine()){
 				if(perso.getVole()) {
 					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
 					int idVoleur = idJoueurVoleur();
@@ -237,10 +237,10 @@ public class Jeu {
 				for (int index= 0; index<listeDePersonnage.size();index++) {
 					System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
 				}
-				System.out.println("Qu'elle personnage choississez vous ? Veuillez rentrer le numéro assossié");
-				int choixPersonnage = Interaction.lireUnEntier(1, listeDePersonnage.size());
-				listeDePersonnage.get(choixPersonnage).setJoueur(joueur);
-				listeDePersonnage.remove(choixPersonnage);
+				System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+				int choixPersonnage = Interaction.lireUnEntier(1, listeDePersonnage.size()+1);
+				listeDePersonnage.get(choixPersonnage-1).setJoueur(joueur);
+				listeDePersonnage.remove(choixPersonnage-1);
 			}
 			IndexJoueur++;
 		}
@@ -276,8 +276,8 @@ public class Jeu {
 					}
 					choix = generateur.nextInt(1,3);
 				}
-				perso.ajouterQuartier(cartes.get(choix));
-				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 2:1));
+				perso.ajouterQuartier(cartes.get(choix-1));
+				this.plateau.getPioche().ajouter(cartes.get((choix == 1)? 1:0));
 				
 			}
 	}

@@ -111,19 +111,17 @@ public abstract class Personnage{
 				NbQuartierACstruire = generateur.nextInt(4);
 			}
 			
-			boolean choix=false; 
+			boolean choix=true; 
 			for (int i=0; i<NbQuartierACstruire;i++) {
 				System.out.println("Quel quartier voulez-vous construire ?");
-				QuartierACstruire = Interaction.lireUnEntier(1,index);
+				QuartierACstruire = Interaction.lireUnEntier(1,getJoueur().getMain().size()+1);
 				while(
-						this.joueur.getMain().get(QuartierACstruire-1).getCout() > this.joueur.nbPieces() ||
-						!(this.joueur.isQuartierDansSaCite("Carrière")) ||
-						!(this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom())) ||
-						!choix
+						(!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom())) ||
+						choix
 						){
 					System.out.println("Souhaitez-vous toujours construire un quartier ?");
-					choix = generateur.nextBoolean();
-					if (choix) {
+					choix = !Interaction.lireOuiOuNon();
+					if (!choix) {
 						System.out.println("Quel quartier voulez-vous construire ?");
 						QuartierACstruire = Interaction.lireUnEntier(1,index);
 					}
