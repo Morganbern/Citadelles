@@ -35,22 +35,25 @@ public class Assassin extends Personnage{
     			
     	}
     	while(choix == -1);
-    	this.getPlateau().getJoueur(choix).getPersonnage().setAssassine();
+    	this.getPlateau().getJoueur(choix-1).getPersonnage().setAssassine();
     }
 
 	@Override
 	public void utiliserPouvoirAvatar() {
 		Random generateur = new Random();
-		int choix;
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		System.out.println((i+1) + " " + this.getPlateau().getJoueur(i).getPersonnage().getNom());
+    	}
+    	int choix;
     	do {
-    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1;
-    		if(choix == this.indiceAssassin()+1) {
+    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages());
+    		if(choix == this.indiceAssassin()) {
     			choix = -1;
     		}
     			
     	}
     	while(choix == -1);
-    	this.getPlateau().getPersonnage(choix-1).setAssassine();
-	} 
+    	this.getPlateau().getJoueur(choix-1).getPersonnage().setAssassine();
+	}
     
 }

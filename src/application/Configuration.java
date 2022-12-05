@@ -112,6 +112,7 @@ public class Configuration {
 
 		}
 		p.melanger();
+		plateau.setPioche(p);
 		return plateau;
 	}
 	

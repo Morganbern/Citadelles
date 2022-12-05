@@ -12,7 +12,7 @@ public class Pioche {
 	}
 
 	public Quartier piocher(){
-		if(! liste.isEmpty()) {
+		if(!liste.isEmpty()) {
 			Quartier q = liste.get(0);
 			liste.remove(0);
 			return q;

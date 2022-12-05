@@ -148,10 +148,12 @@ public abstract class Personnage{
 				if (quartier != null && quartier.getCout() <= perso.getJoueur().nbPieces()) 
 					ListeDeQuartierAchetable.add(quartier);
 			}
-			int QuartierACstruire = generateur.nextInt(ListeDeQuartierAchetable.size());
-			this.joueur.ajouterQuartierDansCite(ListeDeQuartierAchetable.get(QuartierACstruire));
-			this.joueur.retirerQuartierChoisieDansMain(ListeDeQuartierAchetable.get(QuartierACstruire));
-			this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire).getCout());
+			if(ListeDeQuartierAchetable.size() > 0) {
+				int QuartierACstruire = generateur.nextInt(ListeDeQuartierAchetable.size());
+				this.joueur.ajouterQuartierDansCite(ListeDeQuartierAchetable.get(QuartierACstruire));
+				this.joueur.retirerQuartierChoisieDansMain(ListeDeQuartierAchetable.get(QuartierACstruire));
+				this.joueur.retirerPieces(ListeDeQuartierAchetable.get(QuartierACstruire).getCout());
+			}
 		}
     }
     

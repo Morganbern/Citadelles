@@ -113,7 +113,7 @@ public class Magicienne extends Personnage{
 		if(generateur.nextInt(2) == 1){ // Avatar veut echanger ses cartes ?
 	    	int choix;
 	    	do {
-	    		choix = generateur.nextInt(this.getPlateau().getNombreJoueurs())+1; //choisir avec qui echanger ses cartes
+	    		choix = generateur.nextInt(this.getPlateau().getNombreJoueurs()); //choisir avec qui echanger ses cartes
 	    		if(this.getPlateau().getJoueur(choix).getPersonnage().getNom().equals(new String("Magicienne"))) { // pas possible d'echanger ses cartes avec soi-meme
 	    			choix = -1;
 	    		}

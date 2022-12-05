@@ -256,7 +256,7 @@ public class Jeu {
 		}
 		
 		generateur = new Random();
-		int choix  = (!perso.getJoueur().getIsBot())? Interaction.lireUnEntier(1, 2): generateur.nextInt(1,3);
+		int choix  = (!perso.getJoueur().getIsBot())? Interaction.lireUnEntier(1, 3): generateur.nextInt(1,3);
 		
 			
 			if(choix ==1) {
@@ -266,10 +266,10 @@ public class Jeu {
 				if(!perso.getJoueur().getIsBot()) {
 					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
-						System.out.println(i + ". "+ cartes.get(i-1));
+						System.out.println(i + ". "+ cartes.get(i-1).getNom() + " (" +cartes.get(i-1).getType() + ") : coût " + cartes.get(i-1).getCout());
 					}
-					System.out.println("Qu'elles carte souhaité vous garder ?");
-					choix = Interaction.lireUnEntier(1,2);
+					System.out.println("Quelle carte souhaitez-vous garder ?");
+					choix = Interaction.lireUnEntier(1,3);
 					
 				}else {
 					for(int i=1; i<=2; i++) {
