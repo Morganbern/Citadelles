@@ -12,8 +12,8 @@ public class Voleur extends Personnage{
     }
     
     private int indiceVoleur() {
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		if(this.getPlateau().getPersonnage(i).getNom().equals(new String("Voleur")))
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		if(this.getPlateau().getJoueur(i).getPersonnage().getNom().equals(new String("Voleur")))
     			return i;
     	}
     	return -1;
@@ -21,22 +21,22 @@ public class Voleur extends Personnage{
     
     public void utiliserPouvoir() {
 		System.out.println("Quel personnage voulez-vous voler ?");
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		System.out.println((i+1) + " " + this.getPlateau().getPersonnage(i).getNom());
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		System.out.println((i+1) + " " + this.getPlateau().getJoueur(i).getPersonnage().getNom());
     	}
     	int choix;
     	do {
     		System.out.print("Votre choix : ");
-    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix-1).getRang() == 1 || this.getPlateau().getPersonnage(choix-1).getAssassine()) {
+    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombreJoueurs()+1);
+    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getAssassine()) {
     			System.out.println("Vous ne pouvez voler ce joueur.");
     			choix = -1;
     		}
     			
     	}
     	while(choix == -1);
-    	if(this.getPlateau().getPersonnage(choix-1).getJoueur() != null) {
-    		this.getPlateau().getPersonnage(choix-1).setVole();
+    	if(this.getPlateau().getJoueur(choix-1) != null) {
+    		this.getPlateau().getJoueur(choix-1).getPersonnage().setVole();
     	}
     }
 
@@ -46,17 +46,14 @@ public class Voleur extends Personnage{
     	int choix;
     	do {
     		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1; // quel personnage voler ?
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getPersonnage(choix-1).getRang() == 1 || this.getPlateau().getPersonnage(choix-1).getAssassine()) {
+    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getAssassine()) {
     			choix = -1;
     		}
     			
     	}
     	while(choix == -1);
-    	if(this.getPlateau().getPersonnage(choix-1).getJoueur() != null) {
-    		this.getPlateau().getPersonnage(choix-1).setVole();
-    		int nbPiecesAVoler = this.getPlateau().getPersonnage(choix-1).getJoueur().nbPieces();
-    		this.getJoueur().ajouterPieces(nbPiecesAVoler);
-    		this.getPlateau().getPersonnage(choix-1).getJoueur().retirerPieces(nbPiecesAVoler);
+    	if(this.getPlateau().getJoueur(choix-1) != null) {
+    		this.getPlateau().getJoueur(choix-1).getPersonnage().setVole();
     	}
 	} 
     

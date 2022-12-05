@@ -12,8 +12,8 @@ public class Assassin extends Personnage{
     }
     
     private int indiceAssassin() {
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		if(this.getPlateau().getPersonnage(i).getNom().equals(new String("Assassin")))
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		if(this.getPlateau().getJoueur(i).getPersonnage().getNom().equals(new String("Assassin")))
     			return i;
     	}
     	return -1;
@@ -21,13 +21,13 @@ public class Assassin extends Personnage{
     
     public void utiliserPouvoir() {
 		System.out.println("Quel personnage voulez-vous assassiner ?");
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		System.out.println((i+1) + " " + this.getPlateau().getPersonnage(i).getNom());
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		System.out.println((i+1) + " " + this.getPlateau().getJoueur(i).getPersonnage().getNom());
     	}
     	int choix;
     	do {
     		System.out.print("Votre choix : ");
-    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
+    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombreJoueurs()+1);
     		if(choix == this.indiceAssassin()+1) {
     			System.out.println("Vous ne pouvez pas vous assassiner.");
     			choix = -1;
@@ -35,7 +35,7 @@ public class Assassin extends Personnage{
     			
     	}
     	while(choix == -1);
-    	this.getPlateau().getPersonnage(choix-1).setAssassine();
+    	this.getPlateau().getJoueur(choix).getPersonnage().setAssassine();
     }
 
 	@Override

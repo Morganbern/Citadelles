@@ -3,7 +3,6 @@ package modele;
 import java.util.ArrayList;
 import java.util.Random;
 
-import application.Jeu;
 import controleur.Interaction;
 
 public abstract class Personnage{
@@ -146,12 +145,13 @@ public abstract class Personnage{
     	
 		if(generateur.nextBoolean()) {
 			for(Quartier quartier : perso.getJoueur().getMain()) {
-				if (quartier.getCout() < perso.getJoueur().nbPieces()) ListeDeQuartierAchetable.add(quartier);
+				if (quartier != null && quartier.getCout() <= perso.getJoueur().nbPieces()) 
+					ListeDeQuartierAchetable.add(quartier);
 			}
 			int QuartierACstruire = generateur.nextInt(ListeDeQuartierAchetable.size());
-			this.joueur.ajouterQuartierDansCite(this.joueur.getMain().get(QuartierACstruire));
-			this.joueur.retirerQuartierChoisieDansMain(this.joueur.getMain().get(QuartierACstruire));
-			this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
+			this.joueur.ajouterQuartierDansCite(ListeDeQuartierAchetable.get(QuartierACstruire));
+			this.joueur.retirerQuartierChoisieDansMain(ListeDeQuartierAchetable.get(QuartierACstruire));
+			this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire).getCout());
 		}
     }
     

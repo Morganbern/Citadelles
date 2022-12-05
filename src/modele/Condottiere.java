@@ -28,7 +28,7 @@ public class Condottiere extends Personnage{
 	    	int choixJ,choixQ = 0;
 	    	do {
 				System.out.println("Voici la liste des joueurs et le contenu de leur cité :");
-		    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
+		    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
 		    		afficherContenuJoueur(i);
 		    	}
 		    	System.out.println("Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
@@ -73,13 +73,13 @@ public class Condottiere extends Personnage{
     }
 
 	private void afficherContenuJoueur(int i) {
-		System.out.print((i+1) + " | " + this.getPlateau().getPersonnage(i).getNom() + " (" + this.getPlateau() .getPersonnage(i).getJoueur().getNom() + ") : ");
+		System.out.print((i+1) + " | " + this.getPlateau().getJoueur(i).getPersonnage().getNom() + " (" + this.getPlateau().getJoueur(i).getNom() + ") : ");
 		Quartier temp;
-		for(int j=0; j < this.getPlateau().getPersonnage(i).getJoueur().nbQuartiersDansCite(); j++) {
-			temp = this.getPlateau().getPersonnage(i).getJoueur().getCite()[j];
+		for(int j=0; j < this.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
+			temp = this.getPlateau().getJoueur(i).getCite()[j];
 			System.out.print((j+1)+ " " + temp.getNom() + " (coût " + String.valueOf(temp.getCout()-1) + "), ");
 		}
-		if(this.getPlateau().getPersonnage(i).getJoueur().nbQuartiersDansCite() == 8) {
+		if(this.getPlateau().getJoueur(i).nbQuartiersDansCite() == 8) {
 			System.out.print(" (cité complète)");
 		}
 		System.out.println("");
@@ -97,7 +97,7 @@ public class Condottiere extends Personnage{
 		    		}else if(choixJ == this.indiceEveque()+1 && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) { // pas possible de choisir un eveque vivant
 		    			choixJ = -1;
 		    		}else{
-			    		choixQ = generateur.nextInt(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite())+1; // choix du quartier
+			    		choixQ = generateur.nextInt(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite()+1); // choix du quartier
 			    		if(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1 > this.getJoueur().nbPieces()) { //tresor insuffisant
 				    		choixQ = -1;
 				    		

@@ -145,6 +145,7 @@ public class Jeu {
 				perso.percevoirRessourcesSpecifiques();
 	
 				if(!perso.getJoueur().getIsBot()) {
+					System.out.println("Vous disposez de " + perso.getJoueur().nbPieces() + " pièce(s)");
 					System.out.println("Voulez-vous utiliser votre pouvoir ? oui/o, ou non/n");
 					boolean choix = Interaction.lireOuiOuNon();
 					if(choix) perso.utiliserPouvoir();

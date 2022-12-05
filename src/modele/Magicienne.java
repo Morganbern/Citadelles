@@ -13,8 +13,8 @@ public class Magicienne extends Personnage{
     }
     
     private int indiceMagicienne() {
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		if(this.getPlateau().getPersonnage(i).getNom().equals(new String("Magicienne")))
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		if(this.getPlateau().getJoueur(i).getPersonnage().getNom().equals(new String("Magicienne")))
     			return i;
     	}
     	return -1;
@@ -26,14 +26,14 @@ public class Magicienne extends Personnage{
 		System.out.println("Voulez-vous  ́echanger vos cartes avec celles d’un autre joueur ?(o/n) ");
 		boolean reponse = Interaction.lireOuiOuNon();
 		if(reponse) {
-	    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
+	    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
 	    		System.out.println((i+1) + " " + this.getPlateau().getPersonnage(i).getNom() + "- Nb de cartes : " + this.getPlateau().getJoueur(i).nbQuartiersDansMain());
 	    	}
 	    	int choix;
 	    	do {
 	    		System.out.println("Votre choix : ");
 	    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-	    		if(choix == this.indiceMagicienne()+1) {
+	    		if(this.getPlateau().getJoueur(choix).getPersonnage().getNom().equals(new String("Magicienne"))) {
 	    			System.out.println("Vous ne pouvez pas vous échanger vos cartes.");
 	    			choix = -1;
 	    		}
@@ -113,8 +113,8 @@ public class Magicienne extends Personnage{
 		if(generateur.nextInt(2) == 1){ // Avatar veut echanger ses cartes ?
 	    	int choix;
 	    	do {
-	    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages())+1; //choisir avec qui echanger ses cartes
-	    		if(choix == this.indiceMagicienne()+1) { // pas possible d'echanger ses cartes avec soi-meme
+	    		choix = generateur.nextInt(this.getPlateau().getNombreJoueurs())+1; //choisir avec qui echanger ses cartes
+	    		if(this.getPlateau().getJoueur(choix).getPersonnage().getNom().equals(new String("Magicienne"))) { // pas possible d'echanger ses cartes avec soi-meme
 	    			choix = -1;
 	    		}
 	    			
