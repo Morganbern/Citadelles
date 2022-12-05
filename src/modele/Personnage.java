@@ -107,22 +107,23 @@ public abstract class Personnage{
 			
 			if(perso.getNom().equals("Architecte")) {
 				System.out.println("Combien de quartier souhaitez-vous construire? (Jusqu'à 3)");
-				NbQuartierACstruire = generateur.nextInt(4);
+				NbQuartierACstruire = Interaction.lireUnEntier(1,4);
 			}
 			
-			boolean choix=true; 
+			boolean boucle = true;
+			boolean choix;
 			for (int i=0; i<NbQuartierACstruire;i++) {
-				System.out.println("Quel quartier voulez-vous construire ?");
-				QuartierACstruire = Interaction.lireUnEntier(1,getJoueur().getMain().size()+1);
-				while(
-						(!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom())) ||
-						choix
-						){
-					System.out.println("Souhaitez-vous toujours construire un quartier ?");
-					choix = !Interaction.lireOuiOuNon();
-					if (!choix) {
-						System.out.println("Quel quartier voulez-vous construire ?");
-						QuartierACstruire = Interaction.lireUnEntier(1,index);
+				while(boucle){
+					System.out.println("Quel quartier voulez-vous construire ?");
+					QuartierACstruire = Interaction.lireUnEntier(1,getJoueur().getMain().size()+1);
+					if( (!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom()))) {
+						System.out.println("Vous ne pouvez pas construire 2 fois le même Quartier");
+					}else {
+						if(this.getJoueur().nbPieces() >= Main.get(QuartierACstruire-1).getCout()) {
+							//a completer
+						}
+						System.out.println("Souhaitez-vous toujours construire un quartier ?");
+						choix = Interaction.lireOuiOuNon();
 					}
 				}
 				

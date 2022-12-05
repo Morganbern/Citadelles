@@ -54,6 +54,7 @@ public class Jeu {
 			tourDeJeu();
 			gestionCouronne();
 			reinitialisationPersonnages();
+			System.out.println("Fin du tour");
 		}while(!partieFinie());
 		calculDesPoints();
 		
@@ -263,7 +264,7 @@ public class Jeu {
 				perso.ajouterPieces();
 			}else {
 				ArrayList<Quartier> cartes = new ArrayList<Quartier>();
-				if(!perso.getJoueur().getIsBot()) {
+				if(!perso.getJoueur().getIsBot()) { // Joueur humain
 					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 						System.out.println(i + ". "+ cartes.get(i-1).getNom() + " (" +cartes.get(i-1).getType() + ") : coût " + cartes.get(i-1).getCout());
@@ -271,7 +272,7 @@ public class Jeu {
 					System.out.println("Quelle carte souhaitez-vous garder ?");
 					choix = Interaction.lireUnEntier(1,3);
 					
-				}else {
+				}else { //Bot
 					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
 					}
