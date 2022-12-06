@@ -43,7 +43,7 @@ public class Assassin extends Personnage{
 		Random generateur = new Random();
     	int choix;
     	do {
-    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages());
+    		choix = generateur.nextInt(this.getPlateau().getNombreJoueurs());
     		if(choix == this.indiceAssassin()) {
     			choix = -1;
     		}

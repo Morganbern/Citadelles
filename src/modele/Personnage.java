@@ -93,13 +93,6 @@ public abstract class Personnage{
 			
 			ArrayList<Quartier> Main = perso.getJoueur().getMain();
 			
-			// Afficher la main
-			int index=1;
-			for(Quartier quartier : Main) {
-				System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
-				index ++;
-			}
-			
 			int QuartierACstruire = 0;
 			int NbQuartierACstruire = 1;
 			
@@ -107,9 +100,14 @@ public abstract class Personnage{
 				System.out.println("Combien de quartier souhaitez-vous construire? (Jusqu'à 3)");
 				NbQuartierACstruire = Interaction.lireUnEntier(1,4);
 			}
-			
-			boolean boucle = true;
 			for (int i=0; i<NbQuartierACstruire;i++) {
+				boolean boucle = true;
+				// Afficher la main
+				int index=1;
+				for(Quartier quartier : Main) {
+					System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
+					index ++;
+				}
 				while(boucle){
 					System.out.println("Quel quartier voulez-vous construire ?");
 					QuartierACstruire = Interaction.lireUnEntier(1,Main.size()+1);
@@ -135,6 +133,7 @@ public abstract class Personnage{
 						boucle = Interaction.lireOuiOuNon();
 					}
 				}
+				boucle = true;
 			}
 			
 			

@@ -33,18 +33,22 @@ public class Interaction {
 	public static int lireUnEntier(int borneMin, int borneMax) {
 		int i=borneMin-1;
 		boolean continu = false;
-		do {
-			try {
-				i = sc.nextInt();
-				continu = (i>=borneMin && i<borneMax);	
-				if(!continu) {
+		if(borneMin == borneMax-1) {
+			i=borneMin;
+		}else {
+			do {
+				try {
+					i = sc.nextInt();
+					continu = (i>=borneMin && i<borneMax);	
+					if(!continu) {
+						System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
+					}
+				} catch (InputMismatchException e) {
 					System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
+					sc.next(); // passe l'entier pour �viter de boucler
 				}
-			} catch (InputMismatchException e) {
-				System.out.print("Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
-				sc.next(); // passe l'entier pour �viter de boucler
-			}
-		} while(!continu);
+			} while(!continu);
+		}
 		return i;
 	}
 
