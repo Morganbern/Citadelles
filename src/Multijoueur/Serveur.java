@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -19,13 +21,27 @@ public class Serveur {
 	
 	private static ArrayList<Socket> clients = new ArrayList<>();
 	private static ArrayList<BufferedReader> ins = new ArrayList<>();
-	public static ArrayList<PrintWriter> outs = new ArrayList<>();
+	public  static ArrayList<PrintWriter> outs = new ArrayList<>();
+	private static int NbPersonneConnecte;
 	
 	public static void main(String[] args) throws IOException, InterruptedException{
 		
+		
 		System.out.println("Veuillez entrer le nombre de joueur attendu? (maximum 3)");
 		int NbDeJoueurAttendu = Interaction.lireUnEntier(0, 4);
+//		Enumeration e = NetworkInterface.getNetworkInterfaces();
+//		while(e.hasMoreElements())
+//		{
+//		    NetworkInterface n = (NetworkInterface) e.nextElement();
+//		    Enumeration ee = n.getInetAddresses();
+//		    while (ee.hasMoreElements())
+//		    {
+//		        InetAddress i = (InetAddress) ee.nextElement();
+//		        System.out.println(i.+ " " +i.getHostAddress());
+//		    }
+//		}
 		ServerSocket listener = new ServerSocket (PORT);
+		
 		
 		while(clients.size()<NbDeJoueurAttendu) {
 			System.out.println("[SERVER] Waiting for client connection...");
@@ -36,22 +52,22 @@ public class Serveur {
 			ins.add(new BufferedReader(new InputStreamReader(client.getInputStream())));
 			System.out.println("En attente de " + (NbDeJoueurAttendu - clients.size()) + " Joueur(s)");
 		}
-		String str = ins.get(0).readLine();
-		System.out.println("client 1 : " + str);
 		
-		String str2 = ins.get(1).readLine();
-		System.out.println("client 2 : " + str2);
+		setNbPersonneConnecte(clients.size());
 		
-		outToAll("yes");
-		
-		
-//		out = new PrintWriter(clients.get(0).getOutputStream(), true);
-//		out.println("test");
-//		
+//		outToAll("TestingAll");
+//		outs.get(0).println("test");
+//		String str;
 //		while(true) {
-//			
+//			str = ins.get(0).readLine();
+//			if(!str.equals("")) {
+//				System.out.println(str);
+//				outs.get(0).println("receive it");
+//				outs.get(0).flush();
+//			}
 //		}
-		//listener.close();
+		
+//		listener.close();
 		
 //		ServerSocket listener = new ServerSocket (PORT);
 //		Socket client = listener.accept();
@@ -65,19 +81,26 @@ public class Serveur {
 //		out = new PrintWriter(client.getOutputStream());
 //		out.println("yes");
 //		out.flush();
-//		
-		
-		
-		
+//			
 	}
 	
 	
-	
-	public static void outToAll(String msg) throws IOException {
-		for (PrintWriter out : outs ) {
-			out.println(msg);
-			out.flush();
-		}
+	public static void setNbPersonneConnecte(int nbPersonneConnecte) {
+		NbPersonneConnecte = nbPersonneConnecte;
 	}
+	
+	public static int getNbPersonneConnecte() {
+		return NbPersonneConnecte;
+	}
+	
+	public static ArrayList<BufferedReader> getIns() {
+		return ins;
+	}
+	
+	public static ArrayList<PrintWriter> getOuts() {
+		return outs;
+	}
+	
+	
 	
 }

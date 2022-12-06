@@ -1,5 +1,7 @@
 package modele;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +17,8 @@ public class Joueur {
 	private boolean IsBot;
 	private boolean termineePremier;
 	protected Personnage monPersonnage;
+	private BufferedReader in;
+	private PrintWriter out;
 	
 	public Joueur(String nom) {
 		super();
@@ -26,6 +30,8 @@ public class Joueur {
 		this.main = new ArrayList<Quartier>();
 		this.monPersonnage = null;
 		this.IsBot = false;
+		this.in = null;
+		this.out = null;
 	}
 	
 	public boolean isTermineePremier() {
@@ -174,4 +180,19 @@ public class Joueur {
 		}
 	}
 	
+	public BufferedReader getIn() {
+		return in;
+	}
+	
+	public void setIn(BufferedReader in) {
+		this.in = in;
+	}
+	
+	public PrintWriter getOut() {
+		return out;
+	}
+	
+	public void setOut(PrintWriter out) {
+		this.out = out;
+	}
 }

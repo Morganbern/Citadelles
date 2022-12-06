@@ -13,6 +13,12 @@ import modele.Quartier;
 import modele.Roi;
 import modele.Voleur;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import Multijoueur.Serveur;
 import controleur.Interaction;
 
 public class Configuration {
@@ -72,7 +78,6 @@ public class Configuration {
 		plateau.ajouterPersonnage(new Roi());
 		
 		// Connaître nombre réel joueur
-		
 		System.out.println("Entrer le nombre de joueur réel parmis les 4 joueurs");
 		int nbJoueur = Interaction.lireUnEntier(0,5);
 		
@@ -114,6 +119,91 @@ public class Configuration {
 		p.melanger();
 		plateau.setPioche(p);
 		return plateau;
+	}
+	
+	
+	public static PlateauDeJeu configurationMultijoueur(Pioche p) {
+		PlateauDeJeu plateau = new PlateauDeJeu();
+		plateau.ajouterPersonnage(new Architecte());
+		plateau.ajouterPersonnage(new Assassin());
+		plateau.ajouterPersonnage(new Condottiere());
+		plateau.ajouterPersonnage(new Eveque());
+		plateau.ajouterPersonnage(new Magicienne());
+		plateau.ajouterPersonnage(new Marchande());
+		plateau.ajouterPersonnage(new Voleur());
+		plateau.ajouterPersonnage(new Roi());
+		
+		// Connaître nombre réel joueur connecté
+		int nbJoueur = Serveur.getNbPersonneConnecte();
+		
+		// Récupérer la liste des inputs/outputs
+		ArrayList<PrintWriter> outs = Serveur.getOuts();
+		ArrayList<BufferedReader> ins = Serveur.getIns();
+		BufferedReader in;
+		PrintWriter out;
+		
+		// Créer joueur local et associer in/out
+		System.out.println("Nom du Joueur n°1 ?" );
+		String NomJoueur= Interaction.lireUneChaine();
+		Joueur Local = new Joueur(NomJoueur);
+		plateau.ajouterJoueur(Local);
+		
+		Joueur Multi;
+		//	Créer joueur en ligne et associer in/out
+		for(int Joueur=0; Joueur< nbJoueur; Joueur ++) {
+			in = ins.get(Joueur);
+			out = outs.get(Joueur);
+			out.println("Nom du Joueur n°" + (Joueur+2) + "?" );
+			out.flush();
+			
+			try {
+				NomJoueur = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Multi =  new Joueur(NomJoueur);
+			plateau.ajouterJoueur(Multi);
+			Multi.setIn(in);	
+			Multi.setOut(out);
+		}
+		
+		//Joueur local non compris dans les joueurs connectés
+		nbJoueur += 1;
+		
+		// Ajouter les bots
+		for(int bot=nbJoueur+1; bot<5; bot++) {
+			plateau.ajouterJoueur(new Joueur("Joueur"+bot));
+			plateau.getJoueur(bot-1).setIsBot(true);
+		}
+		
+		
+		String[] MerveilleName = {"Capitole",
+									"Carrière",
+									"Chantier",
+									"Cours des Miracles",
+									"Donjon",
+									"Ecole de Magie",
+									"Ecuries",
+									"Grande Muraille",
+									"Hospice",
+									"Manufacture",
+									"Necropole",
+									"Parc",
+									"Statue Equestre",
+									"Tripot"
+									};
+		
+		String type = "MERVEILLE";
+		int[] MerveilleCost = {5, 5, 3, 2, 3, 6, 2, 6, 4, 5, 5, 6, 3, 6};
+		for(int nbMerveille=0; nbMerveille <14; nbMerveille++) {
+			p.ajouter(new Quartier(MerveilleName[nbMerveille], type, MerveilleCost[nbMerveille] ));
+
+		}
+		p.melanger();
+		plateau.setPioche(p);
+		return plateau;
+		
 	}
 	
 }

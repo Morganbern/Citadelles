@@ -1,8 +1,12 @@
 package application;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Multijoueur.Client;
+import Multijoueur.Serveur;
 import controleur.Interaction;
 import modele.Joueur;
 import modele.Personnage;
@@ -14,31 +18,68 @@ public class Jeu {
 	private PlateauDeJeu plateau;
 	private int numeroConfiguration;
 	private Random generateur;
+	private static Boolean isMultijoueur;
 	
 	public Jeu(PlateauDeJeu plateau) {
 		this.plateau = plateau;
 	}
 	
-	public void jouer() {
+	public void jouer(){
 		System.out.println("Bienvenue sur Citadelle !!");
-		String choix;
-		do{
+		int choix;
 			//afficher menu
-			String newLine = System.getProperty("line.separator");
-			System.out.println("Menu :" + newLine + 
-								"Jouer" + newLine +
-								"Règle" + newLine + 
-								"Quitter");
-			System.out.println("Que souhaiter vous faire ?");
-			choix = Interaction.lireUneChaine();
-		}while(!(choix.equals("Jouer") || choix.equals("Règle") || choix.equals("Quitter")));
-		if (choix.equals("Jouer")) {
+		String newLine = System.getProperty("line.separator");
+		
+		System.out.println("Menu :" + newLine + 
+						"1. Jouer" + newLine +
+						"2. Multijoueur" + newLine +
+						"3. Règle " + newLine + 
+						"4. Quitter"
+						);
+		
+		System.out.println("Que souhaiter vous faire ?");
+		choix = Interaction.lireUnEntier(1, 5);
+		
+		if (choix == 1) {
+			setIsMultijoueur(false);
 			jouerPartie();
-		}else if(choix.equals("Règle")) {
+		}else if(choix==2) {
+			
+			System.out.println("Souhaitez-vous :" + newLine +
+					"1. Héberger une partie" + newLine +
+					"2. Rejoindre une partie" + newLine +
+					"3. Revenir au menu principal"
+					);
+		int ClientorServ = Interaction.lireUnEntier(1, 4);
+		if (ClientorServ==1) {
+			setIsMultijoueur(true);
+			try {
+				Serveur.main(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			jouerPartie();
+		}else if(ClientorServ ==2) {
+			try {
+				Client.main(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			jouer();
+		}
+		
+			
+		}else if(choix==3) {
 			afficherLesRegles();
 		}else {
 			System.out.println("A bientôt sur Citadelle");
-			//System.exit(0);
+			System.exit(0);
 		}
 		
 	}
@@ -63,7 +104,11 @@ public class Jeu {
 	private void initialisation() {
 		Pioche pioche = new Pioche();
 		pioche = Configuration.nouvellePioche();
-		plateau = Configuration.configurationDeBase(pioche);
+		if(getIsMultijoueur()) {
+			plateau = Configuration.configurationMultijoueur(pioche);
+		}else {
+			plateau = Configuration.configurationDeBase(pioche);
+		}
 		for(int i=0; i<plateau.getNombreJoueurs(); i++){
 			plateau.getJoueur(i).ajouterPieces(2);
 			for(int j=0; j<4; j++) 
@@ -340,5 +385,14 @@ public class Jeu {
 			}
 		}
 	}
+	
+	public static void setIsMultijoueur(Boolean isMultijoueur) {
+		Jeu.isMultijoueur = isMultijoueur;
+	}
+	
+	public static Boolean getIsMultijoueur() {
+		return isMultijoueur;
+	}
+	
 	
 }

@@ -1,7 +1,14 @@
 package controleur;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import Multijoueur.Serveur;
+import application.Jeu;
+import modele.Joueur;
 
 public class Interaction {
 	private static Scanner sc = new Scanner(System.in);
@@ -85,7 +92,22 @@ public class Interaction {
 		} while(continu);
 		return retour;
 	}
+	
+	public static  void Send2Joueur(Joueur joueur, String  msg) {
+		if (Jeu.getIsMultijoueur()) {
+			joueur.getOut().println(msg);
+			joueur.getOut().flush();
+		}else {
+			System.out.println(msg);
+		}
+	}
 
-
+	public static void outToAll(String msg) throws IOException {
+		ArrayList<PrintWriter> outs = Serveur.getOuts();
+		for (PrintWriter out : outs ) {
+			out.println("ToAll: " + msg);
+			out.flush();
+		}
+	}
 	
 }
