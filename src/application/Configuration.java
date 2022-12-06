@@ -153,7 +153,7 @@ public class Configuration {
 		for(int Joueur=0; Joueur< nbJoueur; Joueur ++) {
 			in = ins.get(Joueur);
 			out = outs.get(Joueur);
-			out.println("Nom du Joueur n°" + (Joueur+2) + "?" );
+			out.println("Str: Nom du Joueur n°" + (Joueur+2) + "?" );
 			out.flush();
 			
 			try {

@@ -14,36 +14,31 @@ import modele.Joueur;
 public class Interaction {
 	private static Scanner sc = new Scanner(System.in);
 	
+	
+	public static int lireUnEntier(){
+		int Intmsg = 0;
+		boolean continu = true;
+		do {
+			try {
+				Intmsg = sc.nextInt();
+				continu = false;
+			} catch (InputMismatchException e) {
+				System.out.print("Veuillez rentrer un chiffre : ");
+				sc.next(); // passe l'entier pour �viter de boucler
+			}
+		} while(continu);
+		
+		return Intmsg;
+	}
 
-	public static int lireUnEntier(Joueur joueur) {
+	public static int lireUnEntier(Joueur joueur) throws IOException {
 		int Intmsg = 0;
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
-			BufferedReader in = joueur.getIn();
-			String msg = "";
-			
-			while(msg.equals("")) {
-				
-				try {
-					msg = in.readLine();		
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				try {
-					
-					if (! msg.equals("")) {
-						Intmsg = Integer.parseInt(msg);
-					}	
-				} catch (NumberFormatException e) {
-					Send2Joueur(joueur, "Veuillez entrer un nombre : ");
-				    msg = "";
-				}
-			}
+			BufferedReader in = joueur.getIn();	
+			String msg = in.readLine();
+			Intmsg = Integer.parseInt(msg);
 			Send2Joueur(joueur, "OK");
-			
 		}else {
-	
 			boolean continu = true;
 			do {
 				try {
@@ -54,16 +49,14 @@ public class Interaction {
 					sc.next(); // passe l'entier pour �viter de boucler
 				}
 			} while(continu);
-			
 		}
 		return Intmsg;
 		
 	}
 	
-	
 	public static int lireUnEntier(int borneMin, int borneMax) {
 		int Intmsg = 0;
-			boolean continu = false;
+		boolean continu = false;
 			do {
 				try {
 					Intmsg = sc.nextInt();
@@ -82,38 +75,23 @@ public class Interaction {
 	
 	// renvoie un entier lu au clavier compris dans l'intervalle
 	//     [borneMin, borneMax[
-	public static int lireUnEntier(int borneMin, int borneMax, Joueur joueur) {
-		int Intmsg = 0;
+	public static int lireUnEntier(int borneMin, int borneMax, Joueur joueur) throws IOException {
+		int Intmsg = -1;
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 			
-			BufferedReader in = joueur.getIn();
-			String msg = "";
-
-			while(msg.equals("")) {
-				
-				try {
-					msg = in.readLine();		
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			BufferedReader in = joueur.getIn();	
+			String msg;
+			int oneTime = 1;
+			while(!(borneMin<=Intmsg && Intmsg<= borneMax-1)) {
+				if (oneTime !=1) {
+					Send2Joueur(joueur, "Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
 				}
+				msg = in.readLine();
+				Intmsg = Integer.parseInt(msg);
+				oneTime +=1;
 				
-				try {
-					if (! msg.equals("")) {
-						Intmsg = Integer.parseInt(msg);
-						if(!(borneMin<=Intmsg && Intmsg<= borneMax)) {
-							Send2Joueur(joueur, "Veuillez entrer un nombre compris entre " + borneMin + " et " + borneMax + " :");
-							msg = "";
-						}
-					}
-				} catch (NumberFormatException e) {
-					Send2Joueur(joueur, "Veuillez entrer un nombre : ");
-				    msg = "";
-				}
 			}
 			Send2Joueur(joueur, "OK");
-			
-
 			
 		}else {
 			boolean continu = false;
@@ -169,38 +147,18 @@ public class Interaction {
 	
 
 	// lit les r�ponses "oui", "non", "o" ou "n" et renvoie un bool�en
-	public static boolean lireOuiOuNon(Joueur joueur) {
+	public static boolean lireOuiOuNon(Joueur joueur) throws IOException {
 		boolean b= true;
 			if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 				
 				BufferedReader in = joueur.getIn();
-				String msg = "";
+				String msg = in.readLine();
 
-				while(msg.equals("")) {
-					
-					try {
-						msg = in.readLine();		
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-						if (! msg.equals("") && msg.equals("oui") && msg.equals("o") && msg.equals("non") && msg.equals("n")) {
-							if(msg.equals("oui") && msg.equals("o")) {
-								b = true;
-							}else {
-								b = false;
-							}
-						}else {
-							if(!msg.equals("")) {
-								Send2Joueur(joueur," Veuillez entrer oui/o ou non/n : ");
-								msg = "";
-							}
-						}
-						
+				if(msg.equals("true")) {
+					b = true;
+				}else {
+					b = false;
 				}
-				Send2Joueur(joueur, "OK");
-				
 				
 			}else {
 				
@@ -254,22 +212,13 @@ public class Interaction {
 	}
 
 	// renvoie une cha�ne de caract�re lue au clavier:
-	public static String lireUneChaine(Joueur joueur) {
+	public static String lireUneChaine(Joueur joueur) throws IOException {
 		String retour = "";
 		
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 			BufferedReader in = joueur.getIn();
-			
-			while(retour.equals("")){
-				try {
-					retour = in.readLine();		
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
+			retour = in.readLine();		
+	
 		}else {
 			
 			boolean continu = true;
@@ -297,10 +246,12 @@ public class Interaction {
 				out.println(msg);
 				out.flush();
 			}else {
+				msg = SuppPrefixMsg(msg);
 				System.out.print(msg);
 			}
 			
 		}else {
+			msg = SuppPrefixMsg(msg);
 			System.out.print(msg);
 		}
 	}
@@ -337,5 +288,17 @@ public class Interaction {
 		}
 	}
 	
+	public static String SuppPrefixMsg(String msg) {
+		if(msg.contains("Int: ")) {
+			msg.replace("Int", "");
+		}else if(msg.contains("Str: ")) {
+			msg.replace("Str", "");
+		}else if(msg.contains("Bool: ")) {
+			msg.replace("Bool", "");
+		}else if(msg.contains("Msg: ")) {
+			msg.replace("Msg", "");
+		}
+		return msg;
+	}
 	
 }

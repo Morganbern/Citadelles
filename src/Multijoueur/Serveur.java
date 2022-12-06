@@ -50,7 +50,7 @@ public class Serveur {
 			Socket client = listener.accept();
 			System.out.println("[SERVER] Un joueur à rejoint la salle!");
 			clients.add(client);		
-			outs.add(new PrintWriter(client.getOutputStream()));
+			outs.add(new PrintWriter(client.getOutputStream(), true));
 			ins.add(new BufferedReader(new InputStreamReader(client.getInputStream())));
 			System.out.println("En attente de " + (NbDeJoueurAttendu - clients.size()) + " Joueur(s)");
 		}
@@ -59,11 +59,23 @@ public class Serveur {
 		
 		serv.setIn(ins.get(0));
 		serv.setOut(outs.get(0));
-		outs.get(0).println("Entrer un nombre en 0 et 3");
-		outs.get(0).flush();
-		int Test = Interaction.lireUnEntier(0, 4, serv);
-		System.out.print("Nombre choisie" + Test);
 		
+		outs.get(0).println("Int: Entier entre 0 et 4");
+		outs.get(0).flush();
+		
+		int Test = Interaction.lireUnEntier(0,5,serv);
+		
+		System.out.println("Message reçu: " + Test);
+		
+//		
+//		String msg = ins.get(0).readLine();
+//		System.out.print("Le message : " + msg);
+//		
+//		
+//		outs.get(0).println("Entrer un nombre en 0 et 3");
+//		outs.get(0).flush();
+//		msg = ins.get(0).readLine();
+//		System.out.print("Le message : " + msg);
 		
 //		outToAll("TestingAll");
 //		outs.get(0).println("test");
