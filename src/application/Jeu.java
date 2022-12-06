@@ -8,6 +8,7 @@ import java.util.Random;
 import Multijoueur.Client;
 import Multijoueur.Serveur;
 import controleur.Interaction;
+import modele.Caracteristiques;
 import modele.Joueur;
 import modele.Personnage;
 import modele.Pioche;
@@ -85,7 +86,8 @@ public class Jeu {
 	}
 	
 	private void afficherLesRegles() {
-		System.out.println("Affichage des règles du Jeu");
+		System.out.println("Affichage des règles du Jeu :\n");
+		System.out.print(Caracteristiques.REGLES);
 	}
 	
 	private void jouerPartie() {
@@ -226,13 +228,11 @@ public class Jeu {
 			listeDePersonnage.remove(NcarteEcarte);
 		}
 		
-		// ecarter deux cartes faces cachées
-		for (int i=0; i<2; i++) {
+		// ecarter une carte faces cachées
 			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
 			System.out.println("Un personnage est ́ecarté face cachée");
-			CarteEcarteCache[i] = listeDePersonnage.get(NcarteEcarte);
+			CarteEcarteCache[0] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
-		}
 		
 		// Recuperer la liste des joueurs dans une variables
 		ArrayList<Joueur> listeDeJoueur = new ArrayList<Joueur>();
