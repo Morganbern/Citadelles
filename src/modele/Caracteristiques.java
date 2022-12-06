@@ -1,6 +1,23 @@
 package modele;
 
 public class Caracteristiques {
+	public static String REGLES=
+		"Chaque joueur est à la tête d’une cité qu’il doit développer pour la rendre plus riche et plus\r\n"
+		+ "prestigieuse. Les quartiers des cités sont représentés par des cartes. Lorsqu’un joueur place le\r\n"
+		+ "huitième quartier de sa cité, on finit le tour et la partie est terminée.\r\n"
+		+ "Au début du jeu, chaque joueur reçoit quatre cartes de quartier, deux pièces d’or et une carte\r\n"
+		+ "d’aide de jeu. Un joueur, tiré au sort, reçoit la carte \" Couronne \".\r\n\r\n"
+		+ "Les cartes de quartier :\r\n"
+		+ "Chaque quartier a, en bas à gauche, une gemme de couleur qui indique sa catégorie (Religion =\r\n"
+		+ "bleu, Noblesse = jaune, Commerce = vert, Soldatesque = rouge, Prestige = violet).\r\n"
+		+ "Chaque quartier a un coût de construction égal au nombre de pièces d’or figurant en haut à gauche\r\n"
+		+ "de la carte. Chaque quartier violet, ou Merveille, a un effet sur le jeu, en faveur du joueur dans la\r\n"
+		+ "cité duquel il est construit, qui est décrit sur la carte.\r\n\r\n"
+		+ "Déroulement d’un tour de jeu :\r\n"
+		+ "Chaque tour se compose de deux phases distinctes. Les joueurs, en sens horaire, choisissent tout\r\n"
+		+ "d’abord chacun un Personnage. Chacun joue ensuite à son tour, dans l’ordre des numéros des\r\n"
+		+ "personnages.\r\n\r\n";
+	
 	public static String ASSASSIN= 
 		"L'assassin peut tuer un personnage de son choix. " +
 		"Celui-ci ne jouera pas ce tour-ci.";
