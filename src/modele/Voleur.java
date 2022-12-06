@@ -28,7 +28,7 @@ public class Voleur extends Personnage{
     	do {
     		System.out.print("Votre choix : ");
     		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombreJoueurs()+1);
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getAssassine()) {
+    		if(choix-1 == this.indiceVoleur() || this.getPlateau().getJoueur(choix-1).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getAssassine()) {
     			System.out.println("Vous ne pouvez voler ce joueur.");
     			choix = -1;
     		}
@@ -46,14 +46,14 @@ public class Voleur extends Personnage{
     	int choix;
     	do {
     		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages()); // quel personnage voler ?
-    		if(choix == this.indiceVoleur()+1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix-1).getPersonnage().getAssassine()) {
+    		if(choix == this.indiceVoleur() || this.getPlateau().getJoueur(choix).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix).getPersonnage().getAssassine()) {
     			choix = -1;
     		}
     			
     	}
     	while(choix == -1);
-    	if(this.getPlateau().getJoueur(choix-1) != null) {
-    		this.getPlateau().getJoueur(choix-1).getPersonnage().setVole();
+    	if(this.getPlateau().getJoueur(choix) != null) {
+    		this.getPlateau().getJoueur(choix).getPersonnage().setVole();
     	}
 	} 
     
