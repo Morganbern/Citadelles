@@ -101,39 +101,43 @@ public abstract class Personnage{
 				NbQuartierACstruire = Interaction.lireUnEntier(1,4);
 			}
 			for (int i=0; i<NbQuartierACstruire;i++) {
-				boolean boucle = true;
-				// Afficher la main
-				int index=1;
-				for(Quartier quartier : Main) {
-					System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
-					index ++;
-				}
-				while(boucle){
-					System.out.println("Quel quartier voulez-vous construire ?");
-					QuartierACstruire = Interaction.lireUnEntier(1,Main.size()+1);
-					if( (!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom()))) {
-						System.out.println("Vous ne pouvez pas construire 2 fois le même Quartier");
-					}else {
-						if(this.getJoueur().nbPieces() < Main.get(QuartierACstruire-1).getCout()) {
-							System.out.println("Vous ne pouvez pas construire ce Quartier, vous n'avez pas assez de pièces.");
+				if(Main.size() != 0) {
+					boolean boucle = true;
+					// Afficher la main
+					int index=1;
+					for(Quartier quartier : Main) {
+						System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
+						index ++;
+					}
+					while(boucle){
+						System.out.println("Quel quartier voulez-vous construire ?");
+						QuartierACstruire = Interaction.lireUnEntier(1,Main.size()+1);
+						if( (!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom()))) {
+							System.out.println("Vous ne pouvez pas construire 2 fois le même Quartier");
 						}else {
-							if(this.getJoueur().nbQuartiersDansCite() == 8) {
-								System.out.println("Vous ne pouvez pas construire ce Quartier, votre cité est complète.");
+							if(this.getJoueur().nbPieces() < Main.get(QuartierACstruire-1).getCout()) {
+								System.out.println("Vous ne pouvez pas construire ce Quartier, vous n'avez pas assez de pièces.");
 							}else {
-								this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
-								if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
-								this.joueur.retirerQuartierChoisieDansMain(Main.get(QuartierACstruire-1));
-								boucle = false;
+								if(this.getJoueur().nbQuartiersDansCite() == 8) {
+									System.out.println("Vous ne pouvez pas construire ce Quartier, votre cité est complète.");
+								}else {
+									this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
+									if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
+									this.joueur.retirerQuartierChoisieDansMain(Main.get(QuartierACstruire-1));
+									boucle = false;
+								}
 							}
 						}
+						
+						if(boucle) {
+							System.out.println("Souhaitez-vous toujours construire un quartier ?");
+							boucle = Interaction.lireOuiOuNon();
+						}
 					}
-					
-					if(boucle) {
-						System.out.println("Souhaitez-vous toujours construire un quartier ?");
-						boucle = Interaction.lireOuiOuNon();
-					}
+					boucle = true;
+				} else {
+					System.out.println("Vous n'avez plus de cartes dans votre main, vous ne pouvez donc pas construire de Quartier");
 				}
-				boucle = true;
 			}
 			
 			

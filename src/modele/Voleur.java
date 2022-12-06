@@ -46,6 +46,7 @@ public class Voleur extends Personnage{
     	int choix;
     	do {
     		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages()); // quel personnage voler ?
+    		System.out.println("DEBUG : " +choix + " " + this.getPlateau().getJoueur(choix)); // Debuggage
     		if(choix == this.indiceVoleur() || this.getPlateau().getJoueur(choix).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix).getPersonnage().getAssassine()) {
     			choix = -1;
     		}
