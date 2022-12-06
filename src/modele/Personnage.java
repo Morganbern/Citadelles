@@ -82,9 +82,7 @@ public abstract class Personnage{
     
     private void PersoConstruitQuartier() {
     	
-    	Random generateur = new Random();
     	Personnage perso = this.joueur.getPersonnage();
-    	
     	if(perso.getNom().equals("Architecte")) {
 			System.out.println("Voulez-vous construire un ou des Quartiers ?");
 		}else {
@@ -111,26 +109,31 @@ public abstract class Personnage{
 			}
 			
 			boolean boucle = true;
-			boolean choix;
 			for (int i=0; i<NbQuartierACstruire;i++) {
 				while(boucle){
 					System.out.println("Quel quartier voulez-vous construire ?");
-					QuartierACstruire = Interaction.lireUnEntier(1,getJoueur().getMain().size()+1);
+					QuartierACstruire = Interaction.lireUnEntier(1,Main.size()+1);
 					if( (!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom()))) {
 						System.out.println("Vous ne pouvez pas construire 2 fois le même Quartier");
 					}else {
-						if(this.getJoueur().nbPieces() >= Main.get(QuartierACstruire-1).getCout()) {
-							//a completer
+						if(this.getJoueur().nbPieces() < Main.get(QuartierACstruire-1).getCout()) {
+							System.out.println("Vous ne pouvez pas construire ce Quartier, vous n'avez pas assez de pièces.");
+						}else {
+							if(this.getJoueur().nbQuartiersDansCite() == 8) {
+								System.out.println("Vous ne pouvez pas construire ce Quartier, votre cité est complète.");
+							}else {
+								this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
+								if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
+								this.joueur.retirerQuartierChoisieDansMain(Main.get(QuartierACstruire-1));
+								boucle = false;
+							}
 						}
-						System.out.println("Souhaitez-vous toujours construire un quartier ?");
-						choix = Interaction.lireOuiOuNon();
 					}
-				}
-				
-				if(1<=QuartierACstruire && QuartierACstruire<=index) {
-					this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
-					this.joueur.retirerQuartierChoisieDansMain(perso.getJoueur().getMain().get(QuartierACstruire-1));
-					if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
+					
+					if(boucle) {
+						System.out.println("Souhaitez-vous toujours construire un quartier ?");
+						boucle = Interaction.lireOuiOuNon();
+					}
 				}
 			}
 			
@@ -158,9 +161,7 @@ public abstract class Personnage{
 		}
     }
     
-    public void percevoirRessourcesSpecifiques() { 
-    	if (this.joueur != null && !this.assassine)
-            System.out.println("aucune ressource spécifique");
+    public void percevoirRessourcesSpecifiques() {
     }
     
     

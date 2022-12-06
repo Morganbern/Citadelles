@@ -12,13 +12,16 @@ public class Condottiere extends Personnage{
     }
     
     public void percevoirRessourcesSpecifiques() {
-    	int nbBatMil= 0;
-    	for(int i=0; i< this.getJoueur().nbQuartiersDansCite(); i++) {
-    		if(this.getJoueur().getCite()[i].getType().equals("MILITAIRE"))
-    			nbBatMil++;
+    	if (this.getJoueur() != null && !this.getAssassine()) {
+    		int nbBatMil= 0;
+        	for(int i=0; i< this.getJoueur().nbQuartiersDansCite(); i++) {
+        		if(this.getJoueur().getCite()[i].getType().equals("MILITAIRE"))
+        			nbBatMil++;
+        	}
+        	this.getJoueur().ajouterPieces(nbBatMil);
+    		if(!this.getJoueur().getIsBot())
+    			System.out.println("Vous avez " + nbBatMil + " batiment(s) commercants. Vous recevez donc "+ nbBatMil +" piece(s) d'or.");
     	}
-    	this.getJoueur().ajouterPieces(nbBatMil);
-		System.out.println("Vous avez " + nbBatMil + " batiment(s) commercants. Vous recevez donc "+ nbBatMil +" piece(s) d'or.");
     }
     
 	@Override
@@ -38,7 +41,7 @@ public class Condottiere extends Personnage{
 		    		if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() == 8) {
 		    			System.out.println("Vous ne pouvez pas selectionner un joueur dont la cité est déja complète.");
 		    			choixJ = -1;
-		    		}else if(choixJ == this.indiceEveque()+1 && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) {
+		    		}else if(choixJ+1 == this.indiceEveque() && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) {
 		    			System.out.println("Vous ne pouvez pas choisir l'éveque si il n'est pas assasiné.");
 		    			choixJ = -1;
 		    		}else{
@@ -65,8 +68,8 @@ public class Condottiere extends Personnage{
 	}
 	
     private int indiceEveque() {
-    	for(int i=0; i<this.getPlateau().getNombrePersonnages(); i++) {
-    		if(this.getPlateau().getPersonnage(i).getNom().equals(new String("Eveque")))
+    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
+    		if(this.getPlateau().getJoueur(i).getPersonnage().getNom().equals(new String("Eveque")))
     			return i;
     	}
     	return -1;
@@ -90,7 +93,7 @@ public class Condottiere extends Personnage{
 		if(generateur.nextInt(2) == 1){ //avatar veut utiliser son pouvoir ?
 	    	int choixJ,choixQ = 0;
 	    	do {
-	    		choixJ = generateur.nextInt(this.getPlateau().getNombrePersonnages()+1); // choix du joueur aléatoire (0 = personne)
+	    		choixJ = generateur.nextInt(this.getPlateau().getNombreJoueurs()+1); // choix du joueur aléatoire (0 = personne)
 	    		if(choixJ != 0) {
 		    		if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() == 8) { // la cite du joueur choisi est complete
 		    			choixJ = -1;

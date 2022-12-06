@@ -27,13 +27,13 @@ public class Magicienne extends Personnage{
 		boolean reponse = Interaction.lireOuiOuNon();
 		if(reponse) {
 	    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
-	    		System.out.println((i+1) + " " + this.getPlateau().getPersonnage(i).getNom() + "- Nb de cartes : " + this.getPlateau().getJoueur(i).nbQuartiersDansMain());
+	    		System.out.println((i+1) + " " + this.getPlateau().getJoueur(i).getPersonnage().getNom() + "- Nb de cartes : " + this.getPlateau().getJoueur(i).nbQuartiersDansMain());
 	    	}
 	    	int choix;
 	    	do {
 	    		System.out.println("Votre choix : ");
-	    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-	    		if(this.getPlateau().getJoueur(choix).getPersonnage().getNom().equals(new String("Magicienne"))) {
+	    		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombreJoueurs()+1);
+	    		if(this.getPlateau().getJoueur(choix-1).getPersonnage().getNom().equals(new String("Magicienne"))) {
 	    			System.out.println("Vous ne pouvez pas vous échanger vos cartes.");
 	    			choix = -1;
 	    		}
@@ -121,17 +121,17 @@ public class Magicienne extends Personnage{
 	    	}while(choix == -1);
 	    	
 	    	ArrayList<Quartier> copieMagicienne = new ArrayList<Quartier>(this.getJoueur().getMain());
-	    	ArrayList<Quartier> copiePersonne = new ArrayList<Quartier>(this.getPlateau().getJoueur(choix-1).getMain());
+	    	ArrayList<Quartier> copiePersonne = new ArrayList<Quartier>(this.getPlateau().getJoueur(choix).getMain());
 	    	
 	    	while(this.getJoueur().nbQuartiersDansMain()>0) {
 	    		this.getJoueur().retirerQuartierDansMain();
 	    	}
-	    	while(this.getPlateau().getJoueur(choix-1).nbQuartiersDansMain()>0) {
-	    		this.getPlateau().getJoueur(choix-1).retirerQuartierDansMain();
+	    	while(this.getPlateau().getJoueur(choix).nbQuartiersDansMain()>0) {
+	    		this.getPlateau().getJoueur(choix).retirerQuartierDansMain();
 	    	}
 	    	
 	    	for(int i=0; i<copieMagicienne.size(); i++) {
-	    		this.getPlateau().getJoueur(choix-1).ajouterQuartierDansMain(copieMagicienne.get(i));
+	    		this.getPlateau().getJoueur(choix).ajouterQuartierDansMain(copieMagicienne.get(i));
 	    	}
 	    	for(int i=0; i<copiePersonne.size(); i++) { 
 	    		this.getJoueur().ajouterQuartierDansMain(copiePersonne.get(i));
@@ -158,9 +158,9 @@ public class Magicienne extends Personnage{
 				
 				ArrayList<Quartier> copieMagicienne = new ArrayList<Quartier>(this.getJoueur().getMain());
 				for(int j=0; j<nbCartes;j++) {
-					int choix = generateur.nextInt(copieMagicienne.size())+1; // Quel indice de carte retirer ?
-					this.getPlateau().getPioche().ajouter(copieMagicienne.get(choix-1));
-					copieMagicienne.remove(choix-1);
+					int choix = generateur.nextInt(copieMagicienne.size()); // Quel indice de carte retirer ?
+					this.getPlateau().getPioche().ajouter(copieMagicienne.get(choix));
+					copieMagicienne.remove(choix);
 				}
 
 				for(int i=0;i<nbCartes;i++) //Ajout des cartes defaussés
