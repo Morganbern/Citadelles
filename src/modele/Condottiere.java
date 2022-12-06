@@ -36,7 +36,7 @@ public class Condottiere extends Personnage{
 		    	}
 		    	System.out.println("Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
 	    		System.out.print("Quel joueur choisissez-vous ? (0 pour ne rien faire) ");
-	    		choixJ = Interaction.lireUnEntier(0,this.getPlateau().getNombrePersonnages()+1);
+	    		choixJ = Interaction.lireUnEntier(0,this.getPlateau().getNombreJoueurs()+1);
 	    		if(choixJ != 0) {
 		    		if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() == 8) {
 		    			System.out.println("Vous ne pouvez pas selectionner un joueur dont la cité est déja complète.");
@@ -55,7 +55,7 @@ public class Condottiere extends Personnage{
 	    		}
 	    	}while(choixJ == -1 || choixQ == -1);
 	    	if(choixJ != 0) {
-	    		if(!this.getPlateau().getJoueur(choixJ).isQuartierDansSaCite("Donjon")) {
+	    		if(!this.getPlateau().getJoueur(choixJ-1).isQuartierDansSaCite("Donjon")) {
 					System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
 					this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1);
 					this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom());
@@ -100,18 +100,21 @@ public class Condottiere extends Personnage{
 		    		}else if(choixJ == this.indiceEveque()+1 && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) { // pas possible de choisir un eveque vivant
 		    			choixJ = -1;
 		    		}else{
-			    		choixQ = generateur.nextInt(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite()+1); // choix du quartier
-			    		if(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1 > this.getJoueur().nbPieces()) { //tresor insuffisant
-				    		choixQ = -1;
-				    		
-			    		}
+		    			if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() != 0){
+			    			choixQ = generateur.nextInt(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite()); // choix du quartier
+				    		if(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getCout()-1 > this.getJoueur().nbPieces()) { //tresor insuffisant
+					    		choixQ = -1;
+				    		}
+		    			}else {
+		    				choixJ = 0;
+		    			}
 		    		}
 	    		}
 	    	}while(choixJ == -1 || choixQ == -1);
-	    	if(choixJ != 0 && !this.getPlateau().getJoueur(choixJ).isQuartierDansSaCite("Donjon")) {
-				System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
-				this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1);
-				this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom());
+	    	if(choixJ != 0 && !this.getPlateau().getJoueur(choixJ-1).isQuartierDansSaCite("Donjon")) {
+				System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
+				this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getCout()-1);
+				this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getNom());
 	    	}
 		}
 	}

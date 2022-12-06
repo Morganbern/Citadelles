@@ -26,62 +26,62 @@ public class Jeu {
 	
 	public void jouer(){
 		System.out.println("Bienvenue sur Citadelle !!");
-		int choix;
-			//afficher menu
+		int choix = 0;
 		String newLine = System.getProperty("line.separator");
-		
-		System.out.println("Menu :" + newLine + 
-						"1. Jouer" + newLine +
-						"2. Multijoueur" + newLine +
-						"3. Règle " + newLine + 
-						"4. Quitter"
+			//afficher menu
+		while(choix != 4) {
+			System.out.println("Menu :" + newLine + 
+							"1. Jouer" + newLine +
+							"2. Multijoueur" + newLine +
+							"3. Règle " + newLine + 
+							"4. Quitter"
+							);
+			
+			System.out.println("Que souhaiter vous faire ?");
+			choix = Interaction.lireUnEntier(1, 5);
+			
+			if (choix == 1) {
+				setIsMultijoueur(false);
+				jouerPartie();
+				System.out.println(newLine + newLine);
+			}else if(choix==2) {
+				
+				System.out.println("Souhaitez-vous :" + newLine +
+						"1. Héberger une partie" + newLine +
+						"2. Rejoindre une partie" + newLine +
+						"3. Revenir au menu principal"
 						);
-		
-		System.out.println("Que souhaiter vous faire ?");
-		choix = Interaction.lireUnEntier(1, 5);
-		
-		if (choix == 1) {
-			setIsMultijoueur(false);
-			jouerPartie();
-		}else if(choix==2) {
+				int ClientorServ = Interaction.lireUnEntier(1, 4);
+				if (ClientorServ==1) {
+					setIsMultijoueur(true);
+					try {
+						Serveur.main(null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					jouerPartie();
+				}else if(ClientorServ ==2) {
+					try {
+						Client.main(null);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
+					jouer();
+				}
 			
-			System.out.println("Souhaitez-vous :" + newLine +
-					"1. Héberger une partie" + newLine +
-					"2. Rejoindre une partie" + newLine +
-					"3. Revenir au menu principal"
-					);
-		int ClientorServ = Interaction.lireUnEntier(1, 4);
-		if (ClientorServ==1) {
-			setIsMultijoueur(true);
-			try {
-				Serveur.main(null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+			}else if(choix==3) {
+				afficherLesRegles();
 			}
-			jouerPartie();
-		}else if(ClientorServ ==2) {
-			try {
-				Client.main(null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else {
-			jouer();
 		}
-		
-			
-		}else if(choix==3) {
-			afficherLesRegles();
-		}else {
-			System.out.println("A bientôt sur Citadelle");
-			System.exit(0);
-		}
-		
+		System.out.println("A bientôt sur Citadelle");
+		System.exit(0);
 	}
 	
 	private void afficherLesRegles() {
@@ -95,7 +95,7 @@ public class Jeu {
 			tourDeJeu();
 			gestionCouronne();
 			reinitialisationPersonnages();
-			System.out.println("Fin du tour");
+			System.out.println("Fin du tour\n\n");
 		}while(!partieFinie());
 		calculDesPoints();
 		
@@ -331,11 +331,13 @@ public class Jeu {
 	
 	private void calculDesPoints() {
 		ArrayList<Integer> scoreJoueurs = new ArrayList<Integer>();
+		ArrayList<String> nomJoueurs = new ArrayList<String>();
 		int scoreTotal;
 		ArrayList<String> categorieQuartier = new ArrayList<String>();
-		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+		for(int i=0;i<plateau.getNombreJoueurs();i++) {
 			scoreTotal = 0;
 			categorieQuartier.clear();
+			nomJoueurs.add(plateau.getJoueur(i).getNom());
 			for(int j=0;j<plateau.getJoueur(i).nbQuartiersDansCite();j++) {
 				scoreTotal += plateau.getJoueur(i).getCite()[j].getCout(); //additionner le prix de tout les quartiers de la cite de chaque joueur
 				scoreTotal += plateau.getJoueur(i).getCite()[j].calculDesPointsMerveilles(plateau.getJoueur(i));
@@ -355,7 +357,7 @@ public class Jeu {
 	    int max;
 	    int indice;
 	    System.out.println("---- AFFICHAGE DES SCORES ----");
-		for(int i=0;i<plateau.getNombrePersonnages();i++) {
+		for(int i=0;i<plateau.getNombreJoueurs();i++) {
 		    max = 0;
 		    indice = 0;
 		    for(int j=0; j<scoreJoueurs.size(); j++){ //Trouver le meilleur score et l'indice correspondant
@@ -364,8 +366,9 @@ public class Jeu {
 		            indice = j;
 		        }
 		    }
-		    System.out.println(i + " -> " + plateau.getJoueur(indice).getNom() + " avec " + scoreJoueurs.get(indice) + "points.");
+		    System.out.println(i+1 + " -> " + nomJoueurs.get(indice) + " avec " + scoreJoueurs.get(indice) + "points.");
 		    scoreJoueurs.remove(indice);
+		    nomJoueurs.remove(indice);
 		}
 	}
 
