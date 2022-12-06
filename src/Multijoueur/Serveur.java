@@ -57,15 +57,6 @@ public class Serveur {
 		
 		setNbPersonneConnecte(clients.size());
 		
-		serv.setIn(ins.get(0));
-        serv.setOut(outs.get(0));
-        
-        outs.get(0).println("Int: Entier entre 0 et 4");
-        outs.get(0).flush();
-        
-        int Test = Interaction.lireUnEntier(0,5,serv);
-        
-        System.out.println("Message reçu: " + Test);
 	}
 	
 	
