@@ -1,5 +1,6 @@
 package controleur;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,25 +14,67 @@ import modele.Joueur;
 public class Interaction {
 	private static Scanner sc = new Scanner(System.in);
 
-	public static int lireUnEntier() {
-		int i = 0;
-		boolean continu = true;
-		do {
+	public static int lireUnEntier(Joueur joueur) {
+		int Intmsg = 0;
+		if(Jeu.getIsMultijoueur()) {
+			BufferedReader in = joueur.getIn();
+			String msg = "";
 			try {
-				i = sc.nextInt();
-				continu = false;
-			} catch (InputMismatchException e) {
-				System.out.print("Veuillez rentrer un chiffre : ");
-				sc.next(); // passe l'entier pour �viter de boucler
+				msg = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} while(continu);
-		return i;
+			
+			try{
+				Intmsg = Integer.parseInt(msg);
+			}catch(NumberFormatException e) {
+				msg="";
+			}
+			
+			
+			while(msg.equals("")) {
+				
+				try {
+					msg = in.readLine();		
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					Intmsg = Integer.parseInt(msg);	
+				} catch (NumberFormatException e) {
+				    msg = "";
+				}
+			}
+			
+		}else {
+	
+			boolean continu = true;
+			do {
+				try {
+					Intmsg = sc.nextInt();
+					continu = false;
+				} catch (InputMismatchException e) {
+					System.out.print("Veuillez rentrer un chiffre : ");
+					sc.next(); // passe l'entier pour �viter de boucler
+				}
+			} while(continu);
+			
+		}
+		return Intmsg;
+		
 	}
 
 	// renvoie un entier lu au clavier compris dans l'intervalle
 	//     [borneMin, borneMax[
 	public static int lireUnEntier(int borneMin, int borneMax) {
 		int i=borneMin-1;
+		
+		
+		
+		
 		boolean continu = false;
 		do {
 			try {
@@ -94,20 +137,40 @@ public class Interaction {
 	}
 	
 	public static  void Send2Joueur(Joueur joueur, String  msg) {
+		PrintWriter out;
 		if (Jeu.getIsMultijoueur()) {
-			joueur.getOut().println(msg);
-			joueur.getOut().flush();
+			out = joueur.getOut();
+			if(out!=null) {
+				out.print(msg);
+				out.flush();
+			}else {
+				System.out.print(msg);
+			}
+			
 		}else {
-			System.out.println(msg);
+			System.out.print(msg);
 		}
+	}
+	
+	public static String getMsgJoueur(Joueur joueur) {
+		String msg;
+		BufferedReader in = joueur.getIn();
+		try {
+			msg = in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return msg;
 	}
 
 	public static void outToAll(String msg) throws IOException {
 		ArrayList<PrintWriter> outs = Serveur.getOuts();
 		for (PrintWriter out : outs ) {
-			out.println("ToAll: " + msg);
+			out.print("ToAll: " + msg);
 			out.flush();
 		}
 	}
+	
 	
 }

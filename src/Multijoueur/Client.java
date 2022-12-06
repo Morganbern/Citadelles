@@ -28,12 +28,17 @@ public class Client {
 			msg2Receive = in.readLine();
 			if (msg2Receive!="" && msg2Receive.contains("ToAll: ")) {
 				System.out.println("[Server] : " + msg2Receive);
-				msg2Send = console.nextLine();
+				while(!in.readLine().equals("OK")) {
+					msg2Send = console.nextLine();
+					out.println(msg2Send);
+					out.flush();
+				}
+			}
+
 				if(msg2Send.equals("quitter")) {
 					break;
 				}
-				out.println(msg2Send);
-				out.flush();
+
 			}
 		}
 		
