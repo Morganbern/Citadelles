@@ -183,7 +183,8 @@ public class Jeu {
 		for (Personnage perso : listeDePersonnage) {
 			if (perso.getJoueur() != null && !perso.getAssassine()){
 				if(perso.getVole()) {
-					if(!perso.getJoueur().getIsBot())System.out.println("Vous avez été volé !!");
+					if(!perso.getJoueur().getIsBot())
+						Interaction.Send2Joueur(perso.getJoueur(), "Msg: Vous avez été volé !!");
 					int idVoleur = idJoueurVoleur();
 					int nbPiecesAVoler = perso.getJoueur().nbPieces();
 					perso.getJoueur().retirerPieces(nbPiecesAVoler);
@@ -193,9 +194,9 @@ public class Jeu {
 				perso.percevoirRessourcesSpecifiques();
 	
 				if(!perso.getJoueur().getIsBot()) {
-					System.out.println("Vous disposez de " + perso.getJoueur().nbPieces() + " pièce(s)");
-					System.out.println("Voulez-vous utiliser votre pouvoir ? oui/o, ou non/n");
-					boolean choix = Interaction.lireOuiOuNon();
+					Interaction.Send2Joueur(perso.getJoueur(), "Msg: Vous disposez de " + perso.getJoueur().nbPieces() + " pièce(s)");
+					Interaction.Send2Joueur(perso.getJoueur(), "Bool: Voulez-vous utiliser votre pouvoir ? oui/o, ou non/n");
+					boolean choix = Interaction.lireOuiOuNon(perso.getJoueur());
 					if(choix) perso.utiliserPouvoir();
 					
 				}else {
@@ -223,14 +224,14 @@ public class Jeu {
 		
 		for (int i=0; i<2; i++) {
 			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
-			System.out.println("Le Personnage " + listeDePersonnage.get(NcarteEcarte).getNom()+ " est écarté face visible");
+			Interaction.outToAll("Le Personnage " + listeDePersonnage.get(NcarteEcarte).getNom()+ " est écarté face visible");
 			CarteEcarteVisible[i] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
 		}
 		
 		// ecarter une carte faces cachées
 			NcarteEcarte = generateur.nextInt(listeDePersonnage.size());
-			System.out.println("Un personnage est ́ecarté face cachée");
+			Interaction.outToAll("Un personnage est ́ecarté face cachée");
 			CarteEcarteCache[0] = listeDePersonnage.get(NcarteEcarte);
 			listeDePersonnage.remove(NcarteEcarte);
 		
@@ -245,7 +246,7 @@ public class Jeu {
 		while(!plateau.getJoueur(JoueurAvecCouronne).getPossedeCouronne()) JoueurAvecCouronne++;
 
 		Joueur JoueurCouronne = plateau.getJoueur(JoueurAvecCouronne);
-		System.out.println("Le joueur " + JoueurCouronne.getNom() + " à la couronne ! ");
+		Interaction.outToAll("Le joueur " + JoueurCouronne.getNom() + " à la couronne ! ");
 		// La couronne choisi son personnage
 		if(JoueurCouronne.getIsBot()){ //couronne = bot
 			int RndmInt = generateur.nextInt(0,listeDePersonnage.size());
@@ -253,11 +254,11 @@ public class Jeu {
 			listeDePersonnage.remove(RndmInt);
 		}else { //couronne = humain
 			for (int index= 0; index<listeDePersonnage.size();index++) {
-				System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
+				Interaction.Send2Joueur(JoueurCouronne, "Msg: " + (index+1) + " " + listeDePersonnage.get(index).getNom());
 			}
 			
-			System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
-			int choixPersonnage = Interaction.lireUnEntier(1,listeDePersonnage.size()+1);
+			Interaction.Send2Joueur(JoueurCouronne, "Int: Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+			int choixPersonnage = Interaction.lireUnEntier(1,listeDePersonnage.size()+1,JoueurCouronne);
 			listeDePersonnage.get(choixPersonnage-1).setJoueur(JoueurCouronne);
 			listeDePersonnage.remove(choixPersonnage-1);
 		}
@@ -282,10 +283,10 @@ public class Jeu {
 				
 			}else {
 				for (int index= 0; index<listeDePersonnage.size();index++) {
-					System.out.println((index+1) + " " + listeDePersonnage.get(index).getNom());
+					Interaction.Send2Joueur(joueur, "Msg: " + (index+1) + " " + listeDePersonnage.get(index).getNom());
 				}
-				System.out.println("Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
-				int choixPersonnage = Interaction.lireUnEntier(1, listeDePersonnage.size()+1);
+				Interaction.Send2Joueur(joueur, "Int: Quel personnage choississez vous ? Veuillez rentrer le numéro assossié");
+				int choixPersonnage = Interaction.lireUnEntier(1, listeDePersonnage.size()+1, joueur);
 				listeDePersonnage.get(choixPersonnage-1).setJoueur(joueur);
 				listeDePersonnage.remove(choixPersonnage-1);
 			}
@@ -296,13 +297,13 @@ public class Jeu {
 	private void percevoirRessource(Personnage perso) {
 		
 		if(!perso.getJoueur().getIsBot()) {
-			System.out.println("Souhaitez-vous prendre : ");
-			System.out.println("1. Deux pièces d'or ");
-			System.out.println("2. Prendre deux cartes de la pioche, une carte sera ensuite défaussée");
+			Interaction.Send2Joueur(perso.getJoueur(), "Msg: Souhaitez-vous prendre : ");
+			Interaction.Send2Joueur(perso.getJoueur(), "Msg: 1. Deux pièces d'or ");
+			Interaction.Send2Joueur(perso.getJoueur(), "Int: 2. Prendre deux cartes de la pioche, une carte sera ensuite défaussée");
 		}
 		
 		generateur = new Random();
-		int choix  = (!perso.getJoueur().getIsBot())? Interaction.lireUnEntier(1, 3): generateur.nextInt(1,3);
+		int choix  = (!perso.getJoueur().getIsBot())? Interaction.lireUnEntier(1, 3, perso.getJoueur()): generateur.nextInt(1,3);
 		
 			
 			if(choix ==1) {
@@ -312,10 +313,10 @@ public class Jeu {
 				if(!perso.getJoueur().getIsBot()) { // Joueur humain
 					for(int i=1; i<=2; i++) {
 						cartes.add(this.plateau.getPioche().piocher());
-						System.out.println(i + ". "+ cartes.get(i-1).getNom() + " (" +cartes.get(i-1).getType() + ") : coût " + cartes.get(i-1).getCout());
+						Interaction.Send2Joueur(perso.getJoueur(), "Msg: " + i + ". "+ cartes.get(i-1).getNom() + " (" +cartes.get(i-1).getType() + ") : coût " + cartes.get(i-1).getCout());
 					}
-					System.out.println("Quelle carte souhaitez-vous garder ?");
-					choix = Interaction.lireUnEntier(1,3);
+					Interaction.Send2Joueur(perso.getJoueur(), "Int: Quelle carte souhaitez-vous garder ?");
+					choix = Interaction.lireUnEntier(1,3, perso.getJoueur());
 					
 				}else { //Bot
 					for(int i=1; i<=2; i++) {
@@ -356,7 +357,7 @@ public class Jeu {
 		}
 	    int max;
 	    int indice;
-	    System.out.println("---- AFFICHAGE DES SCORES ----");
+	    Interaction.outToAll("---- AFFICHAGE DES SCORES ----");
 		for(int i=0;i<plateau.getNombreJoueurs();i++) {
 		    max = 0;
 		    indice = 0;
@@ -366,7 +367,7 @@ public class Jeu {
 		            indice = j;
 		        }
 		    }
-		    System.out.println(i+1 + " -> " + nomJoueurs.get(indice) + " avec " + scoreJoueurs.get(indice) + "points.");
+		    Interaction.outToAll(i+1 + " -> " + nomJoueurs.get(indice) + " avec " + scoreJoueurs.get(indice) + "points.");
 		    scoreJoueurs.remove(indice);
 		    nomJoueurs.remove(indice);
 		}
