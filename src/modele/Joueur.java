@@ -93,7 +93,7 @@ public class Joueur {
 	}
 	
 	public void ajouterQuartierDansCite(Quartier quartier) {
-		if(this.nbQuartier >= 7) // Maximum 7 car 0 - 7 -> 8 quartiers
+		if(this.nbQuartier >= 8) // Maximum 7 car 0 - 7 -> 8 quartiers
 			System.out.println("La cite est complète, elle ne peux plus acceuillir de nouveaux quartiers");
 		else {
 			this.cite[this.nbQuartier] = quartier;
