@@ -20,16 +20,16 @@ public class Assassin extends Personnage{
     }
     
     public void utiliserPouvoir() {
-		System.out.println("Quel personnage voulez-vous assassiner ?");
+		Interaction.Send2Joueur(getJoueur(),"Msg: Quel personnage voulez-vous assassiner ?");
     	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
     		System.out.println((i+1) + " " + this.getPlateau().getJoueur(i).getPersonnage().getNom());
     	}
     	int choix;
     	do {
-    		System.out.print("Votre choix : ");
+    		Interaction.Send2Joueur(getJoueur(),"Int: Votre choix : ");
     		choix = Interaction.lireUnEntier(1,this.getPlateau().getNombreJoueurs()+1);
     		if(choix == this.indiceAssassin()+1) {
-    			System.out.println("Vous ne pouvez pas vous assassiner.");
+    			Interaction.Send2Joueur(getJoueur(), "Msg: Vous ne pouvez pas vous assassiner.");
     			choix = -1;
     		}
     			

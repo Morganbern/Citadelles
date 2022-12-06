@@ -11,7 +11,7 @@ import java.util.Scanner;
 import controleur.Interaction;
 
 public class Client {
-	private static final String SERVER_IP =  "172.16.80.161";//"172.16.80.177";
+	private static final String SERVER_IP =  "localhost";//"172.16.80.177";
 	private static final int SERVER_PORT = 9090;
 	private static BufferedReader in;
 	private static PrintWriter out;

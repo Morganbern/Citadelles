@@ -58,52 +58,14 @@ public class Serveur {
 		setNbPersonneConnecte(clients.size());
 		
 		serv.setIn(ins.get(0));
-		serv.setOut(outs.get(0));
-		
-		outs.get(0).println("Int: Entier entre 0 et 4");
-		outs.get(0).flush();
-		
-		int Test = Interaction.lireUnEntier(0,5,serv);
-		
-		System.out.println("Message reçu: " + Test);
-		
-//		
-//		String msg = ins.get(0).readLine();
-//		System.out.print("Le message : " + msg);
-//		
-//		
-//		outs.get(0).println("Entrer un nombre en 0 et 3");
-//		outs.get(0).flush();
-//		msg = ins.get(0).readLine();
-//		System.out.print("Le message : " + msg);
-		
-//		outToAll("TestingAll");
-//		outs.get(0).println("test");
-//		String str;
-//		while(true) {
-//			str = ins.get(0).readLine();
-//			if(!str.equals("")) {
-//				System.out.println(str);
-//				outs.get(0).println("receive it");
-//				outs.get(0).flush();
-//			}
-//		}
-		
-//		listener.close();
-		
-//		ServerSocket listener = new ServerSocket (PORT);
-//		Socket client = listener.accept();
-//		System.out.println("client connected");
-//		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//		
-//		String str = ins.get(0).readLine();
-//		System.out.println("client : " + str);
-
-//		
-//		out = new PrintWriter(client.getOutputStream());
-//		out.println("yes");
-//		out.flush();
-//			
+        serv.setOut(outs.get(0));
+        
+        outs.get(0).println("Int: Entier entre 0 et 4");
+        outs.get(0).flush();
+        
+        int Test = Interaction.lireUnEntier(0,5,serv);
+        
+        System.out.println("Message reçu: " + Test);
 	}
 	
 	

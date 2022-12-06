@@ -1,5 +1,6 @@
 package modele;
 
+import controleur.Interaction;
 
 public class Eveque extends Personnage{
     
@@ -17,7 +18,7 @@ public class Eveque extends Personnage{
 	    	}
 	    	this.getJoueur().ajouterPieces(nbBatRel);
 	    	if(!this.getJoueur().getIsBot())
-	    		System.out.println("Vous avez " + nbBatRel + " batiment(s) religieux. Vous recevez donc "+ nbBatRel +" piece(s) d'or.");
+	    		Interaction.Send2Joueur(getJoueur(), "Msg: Vous avez " + nbBatRel + " batiment(s) religieux. Vous recevez donc "+ nbBatRel +" piece(s) d'or.");
     	}
     }
 

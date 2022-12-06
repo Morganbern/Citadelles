@@ -1,5 +1,7 @@
 package modele;
 
+import controleur.Interaction;
+
 public class PlateauDeJeu {
 	private Personnage[] listePersonnages;
 	private Joueur[] listeJoueurs;
@@ -46,9 +48,9 @@ public class PlateauDeJeu {
 	
 	public void ajouterPersonnage(Personnage perso) {
 		if(this.nombrePersonnages >= 9)
-			System.out.println("Nombre de personnages maximum atteint");
+			Interaction.outToAll("Nombre de personnages maximum atteint");
 		else if(perso == null)
-			System.out.println("Personnage non existant");
+			Interaction.outToAll("Personnage non existant");
 		else {
 			perso.setPlateau(this);
 			this.listePersonnages[this.nombrePersonnages++] = perso;
@@ -57,9 +59,9 @@ public class PlateauDeJeu {
 	
 	public void ajouterJoueur(Joueur joueur) {
 		if(this.nombreJoueurs >= 9)
-			System.out.println("Nombre de joueur maximum atteint");
+			Interaction.outToAll("Nombre de joueur maximum atteint");
 		else if(joueur == null)
-			System.out.println("Joueur non existant");
+			Interaction.outToAll("Joueur non existant");
 		else {
 			this.listeJoueurs[this.nombreJoueurs++] = joueur;
 		}

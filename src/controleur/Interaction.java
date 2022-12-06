@@ -31,11 +31,17 @@ public class Interaction {
 		return Intmsg;
 	}
 
-	public static int lireUnEntier(Joueur joueur) throws IOException {
+	public static int lireUnEntier(Joueur joueur){
 		int Intmsg = 0;
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 			BufferedReader in = joueur.getIn();	
-			String msg = in.readLine();
+			String msg = "400";
+			try {
+				msg = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Intmsg = Integer.parseInt(msg);
 			Send2Joueur(joueur, "OK");
 		}else {
@@ -75,18 +81,23 @@ public class Interaction {
 	
 	// renvoie un entier lu au clavier compris dans l'intervalle
 	//     [borneMin, borneMax[
-	public static int lireUnEntier(int borneMin, int borneMax, Joueur joueur) throws IOException {
+	public static int lireUnEntier(int borneMin, int borneMax, Joueur joueur){
 		int Intmsg = -1;
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 			
 			BufferedReader in = joueur.getIn();	
-			String msg;
+			String msg= "400";
 			int oneTime = 1;
 			while(!(borneMin<=Intmsg && Intmsg<= borneMax-1)) {
 				if (oneTime !=1) {
 					Send2Joueur(joueur, "Veuillez rentrer un entier entre " + borneMin + " et " + borneMax +" exclue : ");
 				}
-				msg = in.readLine();
+				try {
+					msg = in.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Intmsg = Integer.parseInt(msg);
 				oneTime +=1;
 				
@@ -147,12 +158,18 @@ public class Interaction {
 	
 
 	// lit les r�ponses "oui", "non", "o" ou "n" et renvoie un bool�en
-	public static boolean lireOuiOuNon(Joueur joueur) throws IOException {
+	public static boolean lireOuiOuNon(Joueur joueur){
 		boolean b= true;
 			if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 				
 				BufferedReader in = joueur.getIn();
-				String msg = in.readLine();
+				String msg = "true";
+				try {
+					msg = in.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				if(msg.equals("true")) {
 					b = true;
@@ -212,12 +229,17 @@ public class Interaction {
 	}
 
 	// renvoie une cha�ne de caract�re lue au clavier:
-	public static String lireUneChaine(Joueur joueur) throws IOException {
+	public static String lireUneChaine(Joueur joueur){
 		String retour = "";
 		
 		if(Jeu.getIsMultijoueur() && joueur.getIn()!=null) {
 			BufferedReader in = joueur.getIn();
-			retour = in.readLine();		
+			try {
+				retour = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 	
 		}else {
 			
@@ -280,7 +302,7 @@ public class Interaction {
 		return msg;
 	}
 
-	public static void outToAll(String msg) throws IOException {
+	public static void outToAll(String msg){
 		ArrayList<PrintWriter> outs = Serveur.getOuts();
 		for (PrintWriter out : outs ) {
 			out.println("ToAll: " + msg);

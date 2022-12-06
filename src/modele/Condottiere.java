@@ -20,35 +20,35 @@ public class Condottiere extends Personnage{
         	}
         	this.getJoueur().ajouterPieces(nbBatMil);
     		if(!this.getJoueur().getIsBot())
-    			System.out.println("Vous avez " + nbBatMil + " batiment(s) commercants. Vous recevez donc "+ nbBatMil +" piece(s) d'or.");
+    			Interaction.Send2Joueur(getJoueur(), "Msg: Vous avez " + nbBatMil + " batiment(s) commercants. Vous recevez donc "+ nbBatMil +" piece(s) d'or.");
     	}
     }
     
 	@Override
 	public void utiliserPouvoir() {
-		System.out.print("Voulez-vous utiliser votre pouvoir de destruction ? ");
-		if(Interaction.lireOuiOuNon()){
+		Interaction.Send2Joueur(getJoueur(),"Bool: Voulez-vous utiliser votre pouvoir de destruction ? ");
+		if(Interaction.lireOuiOuNon(getJoueur())){
 	    	int choixJ,choixQ = 0;
 	    	do {
-				System.out.println("Voici la liste des joueurs et le contenu de leur cité :");
+	    		Interaction.Send2Joueur(getJoueur(),"Msg: Voici la liste des joueurs et le contenu de leur cité :");
 		    	for(int i=0; i<this.getPlateau().getNombreJoueurs(); i++) {
 		    		afficherContenuJoueur(i);
 		    	}
-		    	System.out.println("Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
-	    		System.out.print("Quel joueur choisissez-vous ? (0 pour ne rien faire) ");
+		    	Interaction.Send2Joueur( getJoueur(), "Msg: Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
+		    	Interaction.Send2Joueur( getJoueur(), "Int: Quel joueur choisissez-vous ? (0 pour ne rien faire) ");
 	    		choixJ = Interaction.lireUnEntier(0,this.getPlateau().getNombreJoueurs()+1);
 	    		if(choixJ != 0) {
 		    		if(this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite() == 8) {
-		    			System.out.println("Vous ne pouvez pas selectionner un joueur dont la cité est déja complète.");
+		    			Interaction.Send2Joueur(getJoueur(), "Msg: Vous ne pouvez pas selectionner un joueur dont la cité est déja complète.");
 		    			choixJ = -1;
 		    		}else if(choixJ+1 == this.indiceEveque() && !this.getPlateau().getJoueur(this.indiceEveque()).getPersonnage().getAssassine()) {
-		    			System.out.println("Vous ne pouvez pas choisir l'éveque si il n'est pas assasiné.");
+		    			Interaction.Send2Joueur(getJoueur(), "Msg: Vous ne pouvez pas choisir l'éveque si il n'est pas assasiné.");
 		    			choixJ = -1;
 		    		}else{
-	    				System.out.print("Quel quartier choisissez-vous chez " + this.getPlateau().getJoueur(choixJ-1).getNom() + " ? ");
+		    			Interaction.Send2Joueur(getJoueur(), "Int: Quel quartier choisissez-vous chez " + this.getPlateau().getJoueur(choixJ-1).getNom() + " ? ");
 			    		choixQ = Interaction.lireUnEntier(1,this.getPlateau().getJoueur(choixJ-1).nbQuartiersDansCite()+1);
 			    		if(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1 > this.getJoueur().nbPieces()) {
-				    		System.out.println("Votre trésor n'est pas suffisant");
+			    			Interaction.Send2Joueur(getJoueur(), "Int: Votre trésor n'est pas suffisant");
 				    		choixQ = -1;
 			    		}
 		    		}
@@ -56,12 +56,12 @@ public class Condottiere extends Personnage{
 	    	}while(choixJ == -1 || choixQ == -1);
 	    	if(choixJ != 0) {
 	    		if(!this.getPlateau().getJoueur(choixJ-1).isQuartierDansSaCite("Donjon")) {
-					System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
+	    			Interaction.Send2Joueur(getJoueur(), "Msg: => On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
 					this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getCout()-1);
 					this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ-1].getNom());
-					System.out.println("Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
+					Interaction.Send2Joueur(getJoueur(),"Pour information, vous avez "+ this.getJoueur().nbPieces() + " pièce(s) d’or dans votre trésor");
 	    		}else {
-	    			System.out.println("Cela n'a aucun effet sur le joueur puisqu'il possède le quartier Donjon dans sa cité");
+	    			Interaction.Send2Joueur(getJoueur(),"Cela n'a aucun effet sur le joueur puisqu'il possède le quartier Donjon dans sa cité");
 	    		}
 	    	}
 		}
@@ -76,16 +76,16 @@ public class Condottiere extends Personnage{
     }
 
 	private void afficherContenuJoueur(int i) {
-		System.out.print((i+1) + " | " + this.getPlateau().getJoueur(i).getPersonnage().getNom() + " (" + this.getPlateau().getJoueur(i).getNom() + ") : ");
+		Interaction.Send2Joueur(getJoueur(),"Msg: "+ (i+1) + " | " + this.getPlateau().getJoueur(i).getPersonnage().getNom() + " (" + this.getPlateau().getJoueur(i).getNom() + ") : ");
 		Quartier temp;
 		for(int j=0; j < this.getPlateau().getJoueur(i).nbQuartiersDansCite(); j++) {
 			temp = this.getPlateau().getJoueur(i).getCite()[j];
-			System.out.print((j+1)+ " " + temp.getNom() + " (coût " + String.valueOf(temp.getCout()-1) + "), ");
+			Interaction.Send2Joueur(getJoueur(), "Msg: "+(j+1)+ " " + temp.getNom() + " (coût " + String.valueOf(temp.getCout()-1) + "), ");
 		}
 		if(this.getPlateau().getJoueur(i).nbQuartiersDansCite() == 8) {
-			System.out.print(" (cité complète)");
+			Interaction.Send2Joueur(getJoueur(), "Msg: (cité complète) ");
 		}
-		System.out.println("");
+		Interaction.Send2Joueur(getJoueur(), "\n");
 	}
 	
 	public void utiliserPouvoirAvatar() {
@@ -112,7 +112,7 @@ public class Condottiere extends Personnage{
 	    		}
 	    	}while(choixJ == -1 || choixQ == -1);
 	    	if(choixJ != 0 && !this.getPlateau().getJoueur(choixJ-1).isQuartierDansSaCite("Donjon")) {
-				System.out.println("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
+	    		Interaction.outToAll("=> On retire le quartier " + this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getNom() + " à " + this.getPlateau().getJoueur(choixJ-1).getNom());
 				this.getJoueur().retirerPieces(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getCout()-1);
 				this.getPlateau().getJoueur(choixJ-1).retirerQuartierDansCite(this.getPlateau().getJoueur(choixJ-1).getCite()[choixQ].getNom());
 	    	}

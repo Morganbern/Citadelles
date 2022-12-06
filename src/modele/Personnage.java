@@ -84,12 +84,12 @@ public abstract class Personnage{
     	
     	Personnage perso = this.joueur.getPersonnage();
     	if(perso.getNom().equals("Architecte")) {
-			System.out.println("Voulez-vous construire un ou des Quartiers ?");
+    		Interaction.Send2Joueur(getJoueur(), "Bool: Voulez-vous construire un ou des Quartiers ?");
 		}else {
-			System.out.println("Voulez-vous construire un Quartier");
+			Interaction.Send2Joueur(getJoueur(), "Bool: Voulez-vous construire un Quartier");
 		}
  
-		if(Interaction.lireOuiOuNon()) {
+		if(Interaction.lireOuiOuNon(getJoueur())) {
 			
 			ArrayList<Quartier> Main = perso.getJoueur().getMain();
 			
@@ -97,7 +97,7 @@ public abstract class Personnage{
 			int NbQuartierACstruire = 1;
 			
 			if(perso.getNom().equals("Architecte")) {
-				System.out.println("Combien de quartier souhaitez-vous construire? (Jusqu'à 3)");
+				Interaction.Send2Joueur(getJoueur(),"Int: Combien de quartier souhaitez-vous construire? (Jusqu'à 3)");
 				NbQuartierACstruire = Interaction.lireUnEntier(1,4);
 			}
 			for (int i=0; i<NbQuartierACstruire;i++) {
@@ -106,20 +106,20 @@ public abstract class Personnage{
 					// Afficher la main
 					int index=1;
 					for(Quartier quartier : Main) {
-						System.out.println(index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
+						Interaction.Send2Joueur(getJoueur(), "Msg: " + index + ". Nom: " + quartier.getNom() + ", Type: " + quartier.getType() + ", Coût: " + quartier.getCout() );
 						index ++;
 					}
 					while(boucle){
-						System.out.println("Quel quartier voulez-vous construire ?");
+						Interaction.Send2Joueur(getJoueur(), "Int: Quel quartier voulez-vous construire ?");
 						QuartierACstruire = Interaction.lireUnEntier(1,Main.size()+1);
 						if( (!this.joueur.isQuartierDansSaCite("Carrière") && this.joueur.isQuartierDansSaCite(Main.get(QuartierACstruire-1).getNom()))) {
-							System.out.println("Vous ne pouvez pas construire 2 fois le même Quartier");
+							Interaction.Send2Joueur(getJoueur(), "Msg: Vous ne pouvez pas construire 2 fois le même Quartier");
 						}else {
 							if(this.getJoueur().nbPieces() < Main.get(QuartierACstruire-1).getCout()) {
-								System.out.println("Vous ne pouvez pas construire ce Quartier, vous n'avez pas assez de pièces.");
+								Interaction.Send2Joueur(getJoueur(),"Msg: Vous ne pouvez pas construire ce Quartier, vous n'avez pas assez de pièces.");
 							}else {
 								if(this.getJoueur().nbQuartiersDansCite() == 8) {
-									System.out.println("Vous ne pouvez pas construire ce Quartier, votre cité est complète.");
+									Interaction.Send2Joueur(getJoueur(),"Msg: Vous ne pouvez pas construire ce Quartier, votre cité est complète.");
 								}else {
 									this.joueur.ajouterQuartierDansCite(Main.get(QuartierACstruire-1));
 									if(!this.joueur.joueurAChantier()) this.joueur.retirerPieces(perso.getJoueur().getMain().get(QuartierACstruire-1).getCout());
@@ -130,13 +130,13 @@ public abstract class Personnage{
 						}
 						
 						if(boucle) {
-							System.out.println("Souhaitez-vous toujours construire un quartier ?");
-							boucle = Interaction.lireOuiOuNon();
+							Interaction.Send2Joueur(getJoueur(),"Bool: Souhaitez-vous toujours construire un quartier ?");
+							boucle = Interaction.lireOuiOuNon(getJoueur());
 						}
 					}
 					boucle = true;
 				} else {
-					System.out.println("Vous n'avez plus de cartes dans votre main, vous ne pouvez donc pas construire de Quartier");
+					Interaction.Send2Joueur(getJoueur(),"Msg: Vous n'avez plus de cartes dans votre main, vous ne pouvez donc pas construire de Quartier");
 				}
 			}
 			

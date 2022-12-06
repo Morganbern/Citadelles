@@ -1,5 +1,6 @@
 package modele;
 
+import controleur.Interaction;
 
 public class Marchande extends Personnage{
     
@@ -17,12 +18,12 @@ public class Marchande extends Personnage{
 	    	}
 	    	this.getJoueur().ajouterPieces(nbBatCom);
 	    	if(!this.getJoueur().getIsBot())
-	    		System.out.println("Vous avez " + nbBatCom + " batiment(s) commercants. Vous recevez donc "+ nbBatCom +" piece(s) d'or.");
+	    		Interaction.Send2Joueur(getJoueur(), "Msg: Vous avez " + nbBatCom + " batiment(s) commercants. Vous recevez donc "+ nbBatCom +" piece(s) d'or.");
     	}
     }
 
 	public void utiliserPouvoir() {
-		System.out.println("Vous utiliser votre pouvoir. Vous recevez donc 1 piece d'or.");
+		Interaction.Send2Joueur(getJoueur(), "Int: Vous utiliser votre pouvoir. Vous recevez donc 1 piece d'or.");
 		this.getJoueur().ajouterPieces(1);
 	}
 

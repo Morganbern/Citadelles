@@ -1,6 +1,6 @@
 package modele;
 
-
+import controleur.Interaction;
 
 public class Roi extends Personnage{
     
@@ -11,7 +11,7 @@ public class Roi extends Personnage{
     }
     
     public void utiliserPouvoir() {
-        System.out.println("Je prends la couronne");
+    	Interaction.outToAll(getJoueur().getNom()+ "prend la couronne"); 
         if(super.getJoueur()!= null)
             super.getJoueur().setPossedeCouronne(true);
     }
@@ -29,7 +29,7 @@ public class Roi extends Personnage{
 	            }
 	            super.getJoueur().ajouterPieces(nbNoble);
 	            if(!this.getJoueur().getIsBot())
-	            	System.out.println(nbNoble+" ont été ajoutées au trésor du joueur");    
+	            	Interaction.Send2Joueur(getJoueur(), "Msg: "+nbNoble+" ont été ajoutées au trésor du joueur");;    
 	        }
     	}    
     }

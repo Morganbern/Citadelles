@@ -94,7 +94,7 @@ public class Joueur {
 	
 	public void ajouterQuartierDansCite(Quartier quartier) {
 		if(this.nbQuartier >= 8) // Maximum 7 car 0 - 7 -> 8 quartiers
-			System.out.println("La cite est complète, elle ne peux plus acceuillir de nouveaux quartiers");
+			Interaction.Send2Joueur(this.monPersonnage.getJoueur(), "Msg: La cite est complète, elle ne peux plus acceuillir de nouveaux quartiers");
 		else {
 			this.cite[this.nbQuartier] = quartier;
 			this.nbQuartier++;
@@ -117,7 +117,7 @@ public class Joueur {
 	
 	public Quartier retirerQuartierDansCite(String nomQuartier) {
 		if(this.nbQuartier == 0)
-			System.out.println("La cite est vide, aucun quartier ne peut y etre retiré");
+			Interaction.Send2Joueur(this.monPersonnage.getJoueur(), "Msg: La cite est vide, aucun quartier ne peut y etre retiré");
 		else {
 			int indice = positionQuartierInCite(nomQuartier);
 			if(indice != -1){
@@ -162,8 +162,8 @@ public class Joueur {
 	
 	public boolean joueurAChantier() {
 		if(isQuartierDansSaCite("Chantier")) {
-			System.out.println("Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
-			if(Interaction.lireOuiOuNon()) {
+			Interaction.Send2Joueur(this.monPersonnage.getJoueur(), "Bool: Souhaitez vous detruire votre chantier pour ne pas payer le cout de construction de votre quartier ?");
+			if(Interaction.lireOuiOuNon(this.monPersonnage.getJoueur())) {
 				retirerQuartierDansCite("Chantier");
 				return true;
 			}
