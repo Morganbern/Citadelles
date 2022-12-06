@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-	private static final String SERVER_IP = "172.16.80.177";
+	private static final String SERVER_IP =  "localhost";//"172.16.80.177";
 	private static final int SERVER_PORT = 9090;
 	private static BufferedReader in;
 	private static PrintWriter out;
@@ -20,13 +20,13 @@ public class Client {
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream(), true);
 		Scanner console = new Scanner(System.in);
-		String msg2Send;
+		String msg2Send = "";
 		String msg2Receive;
 		
 		while(true) {
 			
 			msg2Receive = in.readLine();
-			if (msg2Receive!="" && msg2Receive.contains("ToAll: ")) {
+			if (!msg2Receive.equals("") && !msg2Receive.contains("ToAll: ")) {
 				System.out.println("[Server] : " + msg2Receive);
 				while(!in.readLine().equals("OK")) {
 					msg2Send = console.nextLine();
@@ -40,7 +40,6 @@ public class Client {
 				}
 
 			}
-		}
 		
 		console.close();
 		in.close();

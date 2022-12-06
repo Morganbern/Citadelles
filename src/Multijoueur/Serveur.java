@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import controleur.Interaction;
+import modele.Joueur;
 
 public class Serveur {
 	private static final int PORT = 9090;
@@ -28,7 +29,8 @@ public class Serveur {
 		
 		
 		System.out.println("Veuillez entrer le nombre de joueur attendu? (maximum 3)");
-		int NbDeJoueurAttendu = Interaction.lireUnEntier(0, 4);
+		Joueur serv = new Joueur("Serv"); 
+		int NbDeJoueurAttendu = Interaction.lireUnEntier(0, 4, serv);
 //		Enumeration e = NetworkInterface.getNetworkInterfaces();
 //		while(e.hasMoreElements())
 //		{
@@ -48,12 +50,20 @@ public class Serveur {
 			Socket client = listener.accept();
 			System.out.println("[SERVER] Un joueur à rejoint la salle!");
 			clients.add(client);		
-			outs.add(new PrintWriter(client.getOutputStream(), true));
+			outs.add(new PrintWriter(client.getOutputStream()));
 			ins.add(new BufferedReader(new InputStreamReader(client.getInputStream())));
 			System.out.println("En attente de " + (NbDeJoueurAttendu - clients.size()) + " Joueur(s)");
 		}
 		
 		setNbPersonneConnecte(clients.size());
+		
+		serv.setIn(ins.get(0));
+		serv.setOut(outs.get(0));
+		outs.get(0).println("Entrer un nombre en 0 et 3");
+		outs.get(0).flush();
+		int Test = Interaction.lireUnEntier(0, 4, serv);
+		System.out.print("Nombre choisie" + Test);
+		
 		
 //		outToAll("TestingAll");
 //		outs.get(0).println("test");
