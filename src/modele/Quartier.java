@@ -94,12 +94,14 @@ public class Quartier {
 			return 0;
 		}
 		case "Cours des Miracles": {
-			System.out.println("Choisissez le type de quartier que vous voulez associez à 'Cours des Miracles'");
-			for (int i=0; i<5; i++) {
-				System.out.println((i+1) + ": " + TYPE_QUARTIERS[i]);
+			if(!joueur.getIsBot()) {
+				System.out.println("Choisissez le type de quartier que vous voulez associez à 'Cours des Miracles'");
+				for (int i=0; i<5; i++) {
+					System.out.println((i+1) + ": " + TYPE_QUARTIERS[i]);
+				}
+				int choixType = Interaction.lireUnEntier(1, 6);
+				this.type = TYPE_QUARTIERS[choixType];
 			}
-			int choixType = Interaction.lireUnEntier(1, 6);
-			this.type = TYPE_QUARTIERS[choixType];
 		}
 		case "Statue Equestre": {
 			if(joueur.getPossedeCouronne()) {

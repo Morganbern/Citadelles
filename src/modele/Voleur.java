@@ -45,8 +45,7 @@ public class Voleur extends Personnage{
 		Random generateur = new Random();
     	int choix;
     	do {
-    		choix = generateur.nextInt(this.getPlateau().getNombrePersonnages()); // quel personnage voler ?
-    		System.out.println("DEBUG : " +choix + " " + this.getPlateau().getJoueur(choix)); // Debuggage
+    		choix = generateur.nextInt(this.getPlateau().getNombreJoueurs()); // quel Joueur voler ?
     		if(choix == this.indiceVoleur() || this.getPlateau().getJoueur(choix).getPersonnage().getRang() == 1 || this.getPlateau().getJoueur(choix).getPersonnage().getAssassine()) {
     			choix = -1;
     		}
