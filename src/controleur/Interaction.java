@@ -136,6 +136,37 @@ public class Interaction {
 		
 		return Intmsg;
 	}
+	
+	
+	public static boolean lireOuiOuNon() {
+		boolean b= true;
+		String texte;
+		boolean continu = true;
+		do {
+			try {
+				texte = sc.next();
+				if (texte.equals(new String("o")) || texte.equals(new String("oui"))) { 
+					b = true;
+					continu = false;
+					
+				}else if(texte.equals(new String("n")) || texte.equals(new String("non"))) {
+					b = false;
+					continu = false;
+
+				}else {
+					System.out.print("Veuillez entrer oui ou o,  ou, n ou non : ");
+				}
+				
+			} catch (InputMismatchException e) {
+				System.out.print("Veuillez entrer oui ou o,  ou, n ou non : ");
+				sc.next(); // passe l'entier pour �viter de boucler
+			}
+		} while(continu);
+				
+
+		return b;
+	}
+	
 
 	// lit les r�ponses "oui", "non", "o" ou "n" et renvoie un bool�en
 	public static boolean lireOuiOuNon(Joueur joueur) {
